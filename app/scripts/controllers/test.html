@@ -1,0 +1,1559 @@
+"
+<div class='mailmunch-forms-before-post' style='display: none !important;'></div><p>If you are going to develop a multi
+  platform mobile application and you googled a bit probably you have met <strong>Ionic</strong>. Ionic is a complete
+  framework based on AngularJS and <strong>Cordova</strong> to develop mobile application with a great interface and an
+  excellent support for all the Cordova plugin like Camera and Social sharing.<span id="more-809"></span></p> <p>Another
+  excellent framework, and its not only made for mobile applications, is Meteor. From the release 1.2 it support native
+  <strong>AngularJS</strong> as alternative to blaze frontend framework and it also support mobile deploy for <strong>IOs</strong>
+  and <strong>Android </strong>like Ionic do.</p> <p>Recently, on the github page of both framework, peoples was asking
+  to create a plugin for <strong>Meteor</strong> to use <strong>Ionic</strong> in it. It was done&#8230; and now, we can
+  build mobile application using the greatest features that both framework can offers, like <strong>realtime</strong>
+  from Meteor and beautiful interface and effects from Ionic.</p> <p>In this tutorial we will use both framework to
+  create a simple photo sharing application where everyone can take a photo with its cellphone camera and post it with a
+  message on a global realtime stream. The application will be very easy, without authentication and without security
+  methods. Also the images will be stored directly into the <strong>mongo database</strong> and it&#8217;s for sure not
+  good for a production app.</p> <p>Start by creating a new meteor application</p> <p><code>meteor create
+  IonicMeteorPost</code></p> <p>once the application is created we can start to load some plugin in it. Obiouvsly the
+  first <strong>Meteor</strong> plugin we need to install is <strong>Ionic</strong>. Install it using the following
+  command<br/> <code>meteor add driftyco:ionic</code><br/> As we said at begin Ionic is based on
+  <strong>AngularJS</strong> so we need to install it</p> <p><code>meteor add angular</code></p> <p>The last thing in
+  order to have the complete setup is to install the ngcordova angular module. The simplest method to load it is to use
+  <strong>bower</strong>, but unfortunately Meteor itself don&#8217;t use it so we need to install and configure another
+  Meteor module.</p> <p><code>meteor add mquandalle:bower</code></p> <p>Thanks to it now we can use
+  <strong>bower</strong> in our Meteor application. To make it working we have t create a directory lib into the root
+  folder of our project and place a <code>bower.json</code> file into it.</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+<div id="crayon-5628f55372358095957886"
+     class="crayon-syntax crayon-theme-obsidian crayon-font-monaco crayon-os-pc print-yes notranslate"
+     data-settings=" minimize scroll-mouseover"
+     style=" margin-top: 12px; margin-bottom: 12px; margin-left: -50px; margin-right: -50px; float: none; margin-left: auto; margin-right: auto; font-size: 12px !important; line-height: 15px !important;">
+  <div class="crayon-toolbar" data-settings=" mouseover overlay hide delay"
+       style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span
+    class="crayon-title">bower.json</span>
+
+    <div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;">
+      <div class="crayon-button crayon-nums-button" title="Toggle Line Numbers">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-plain-button" title="Toggle Plain Code">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-wrap-button" title="Toggle Line Wrap">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-expand-button" title="Expand Code">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-copy-button" title="Copy">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-popup-button" title="Open Code In New Window">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <span class="crayon-language">JavaScript</span></div>
+  </div>
+  <div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+  <div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly
+                                           style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;"> { "name": "ionicmeteorpost", "version": "0.0.1", "dependencies": { "ngCordova": "latest" }, "private": true } </textarea>
+  </div>
+  <div class="crayon-main" style="">
+    <table class="crayon-table">
+      <tr class="crayon-row">
+        <td class="crayon-nums " data-settings="hide">
+          <div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;">
+            <div class="crayon-num" data-line="crayon-5628f55372358095957886-1">1</div>
+            <div class="crayon-num" data-line="crayon-5628f55372358095957886-2">2</div>
+            <div class="crayon-num" data-line="crayon-5628f55372358095957886-3">3</div>
+            <div class="crayon-num" data-line="crayon-5628f55372358095957886-4">4</div>
+            <div class="crayon-num" data-line="crayon-5628f55372358095957886-5">5</div>
+            <div class="crayon-num" data-line="crayon-5628f55372358095957886-6">6</div>
+            <div class="crayon-num" data-line="crayon-5628f55372358095957886-7">7</div>
+            <div class="crayon-num" data-line="crayon-5628f55372358095957886-8">8</div>
+            <div class="crayon-num" data-line="crayon-5628f55372358095957886-9">9</div>
+            <div class="crayon-num" data-line="crayon-5628f55372358095957886-10">10</div>
+            <div class="crayon-num" data-line="crayon-5628f55372358095957886-11">11</div>
+            <div class="crayon-num" data-line="crayon-5628f55372358095957886-12">12</div>
+          </div>
+        </td>
+        <td class="crayon-code">
+          <div class="crayon-pre"
+               style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;">
+            <div class="crayon-line" id="crayon-5628f55372358095957886-1">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f55372358095957886-2">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f55372358095957886-3"><span class="crayon-sy">{</span></div>
+            <div class="crayon-line" id="crayon-5628f55372358095957886-4"><span
+              class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-s">"name"</span><span
+              class="crayon-o">:</span><span class="crayon-h"> </span><span
+              class="crayon-s">"ionicmeteorpost"</span><span class="crayon-sy">,</span></div>
+            <div class="crayon-line" id="crayon-5628f55372358095957886-5"><span
+              class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-s">"version"</span><span class="crayon-o">:</span><span
+              class="crayon-h"> </span><span class="crayon-s">"0.0.1"</span><span class="crayon-sy">,</span></div>
+            <div class="crayon-line" id="crayon-5628f55372358095957886-6"><span
+              class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-s">"dependencies"</span><span
+              class="crayon-o">:</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div>
+            <div class="crayon-line" id="crayon-5628f55372358095957886-7"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-s">"ngCordova"</span><span class="crayon-o">:</span><span class="crayon-h"> </span><span
+              class="crayon-s">"latest"</span></div>
+            <div class="crayon-line" id="crayon-5628f55372358095957886-8"><span
+              class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-sy">}</span><span class="crayon-sy">,</span></div>
+            <div class="crayon-line" id="crayon-5628f55372358095957886-9"><span
+              class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-s">"private"</span><span class="crayon-o">:</span><span
+              class="crayon-h"> </span><span class="crayon-t">true</span></div>
+            <div class="crayon-line" id="crayon-5628f55372358095957886-10"><span class="crayon-sy">}</span></div>
+            <div class="crayon-line" id="crayon-5628f55372358095957886-11">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f55372358095957886-12">&nbsp;</div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div> <!-- [Format Time: 0.0011 seconds] --> <p>now if you try to start <strong>Meteor</strong> you will see in the log
+  the download of the <strong>ngCordova</strong> module.</p> <p>Last thing before start writing some code si to give to
+  our application a comprensive folders and file structure. As suggested in the <strong>angular-meteor</strong> tutorial
+  best practice for large scale application is to maintain separated folder for each functionality.</p> <p>Create a
+  folder and file structure like show in the picture below :<a
+    href="https://www.codetutorial.io/wordpress/wp-content/uploads/2015/10/Schermata-2015-10-12-alle-22.26.18.png"><br/>
+  </a> <a
+    href="https://www.codetutorial.io/wordpress/wp-content/uploads/2015/10/Schermata-2015-10-12-alle-22.32.00.png"><img
+    class="wp-image-811 size-medium aligncenter"
+    src="https://www.codetutorial.io/wordpress/wp-content/uploads/2015/10/Schermata-2015-10-12-alle-22.32.00-276x300.png"
+    alt="Schermata 2015-10-12 alle 22.32.00" width="276" height="300"/></a></p> <p>Basically we created four javascripts
+  files (<code>mainCtrl.js,routes.js,app.js,posts.js</code>), two html files with <code>.ng.html</code> extension in
+  order to avoid Meteor trying to compile it and the <code>index.html</code> file. Other files created by the standard
+  application was deleted.</p> <p>The first file we are going to edit is the simplest one. Put the code below into
+  <code>index.html</code></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+<div id="crayon-5628f55372372449322931"
+     class="crayon-syntax crayon-theme-obsidian crayon-font-monaco crayon-os-pc print-yes notranslate"
+     data-settings=" minimize scroll-mouseover"
+     style=" margin-top: 12px; margin-bottom: 12px; margin-left: -50px; margin-right: -50px; float: none; margin-left: auto; margin-right: auto; font-size: 12px !important; line-height: 15px !important;">
+  <div class="crayon-toolbar" data-settings=" mouseover overlay hide delay"
+       style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span
+    class="crayon-title">index.html</span>
+
+    <div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;">
+      <div class="crayon-button crayon-nums-button" title="Toggle Line Numbers">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-plain-button" title="Toggle Plain Code">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-wrap-button" title="Toggle Line Wrap">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-expand-button" title="Expand Code">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-copy-button" title="Copy">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-popup-button" title="Open Code In New Window">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <span class="crayon-language">XHTML</span></div>
+  </div>
+  <div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+  <div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly
+                                           style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;"> &lt;head&gt; &lt;base href="/"&gt; &lt;meta charset="utf-8"&gt; &lt;meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width"&gt; &lt;title&gt;&lt;/title&gt; &lt;/head&gt; &lt;body&gt; &lt;ion-nav-bar&gt; &lt;ion-nav-back-button class="button-clear"&gt; &lt;i class="ion-arrow-left-c"&gt;&lt;/i&gt; Back &lt;/ion-nav-back-button&gt; &lt;/ion-nav-bar&gt; &lt;ion-nav-view&gt; &lt;/ion-nav-view&gt; &lt;/body&gt; </textarea>
+  </div>
+  <div class="crayon-main" style="">
+    <table class="crayon-table">
+      <tr class="crayon-row">
+        <td class="crayon-nums " data-settings="hide">
+          <div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;">
+            <div class="crayon-num" data-line="crayon-5628f55372372449322931-1">1</div>
+            <div class="crayon-num" data-line="crayon-5628f55372372449322931-2">2</div>
+            <div class="crayon-num" data-line="crayon-5628f55372372449322931-3">3</div>
+            <div class="crayon-num" data-line="crayon-5628f55372372449322931-4">4</div>
+            <div class="crayon-num" data-line="crayon-5628f55372372449322931-5">5</div>
+            <div class="crayon-num" data-line="crayon-5628f55372372449322931-6">6</div>
+            <div class="crayon-num" data-line="crayon-5628f55372372449322931-7">7</div>
+            <div class="crayon-num" data-line="crayon-5628f55372372449322931-8">8</div>
+            <div class="crayon-num" data-line="crayon-5628f55372372449322931-9">9</div>
+            <div class="crayon-num" data-line="crayon-5628f55372372449322931-10">10</div>
+            <div class="crayon-num" data-line="crayon-5628f55372372449322931-11">11</div>
+            <div class="crayon-num" data-line="crayon-5628f55372372449322931-12">12</div>
+            <div class="crayon-num" data-line="crayon-5628f55372372449322931-13">13</div>
+            <div class="crayon-num" data-line="crayon-5628f55372372449322931-14">14</div>
+            <div class="crayon-num" data-line="crayon-5628f55372372449322931-15">15</div>
+            <div class="crayon-num" data-line="crayon-5628f55372372449322931-16">16</div>
+            <div class="crayon-num" data-line="crayon-5628f55372372449322931-17">17</div>
+            <div class="crayon-num" data-line="crayon-5628f55372372449322931-18">18</div>
+            <div class="crayon-num" data-line="crayon-5628f55372372449322931-19">19</div>
+            <div class="crayon-num" data-line="crayon-5628f55372372449322931-20">20</div>
+            <div class="crayon-num" data-line="crayon-5628f55372372449322931-21">21</div>
+          </div>
+        </td>
+        <td class="crayon-code">
+          <div class="crayon-pre"
+               style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;">
+            <div class="crayon-line" id="crayon-5628f55372372449322931-1">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f55372372449322931-2">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f55372372449322931-3"><span class="crayon-r ">&lt;head&gt;</span>
+            </div>
+            <div class="crayon-line" id="crayon-5628f55372372449322931-4"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;base </span><span class="crayon-e ">href</span><span class="crayon-o">=</span><span
+              class="crayon-s ">"/"</span><span class="crayon-r ">&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f55372372449322931-5"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;meta </span><span class="crayon-e ">charset</span><span
+              class="crayon-o">=</span><span class="crayon-s ">"utf-8"</span><span class="crayon-r ">&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f55372372449322931-6"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;meta </span><span class="crayon-e ">name</span><span class="crayon-o">=</span><span
+              class="crayon-s ">"viewport"</span><span class="crayon-h"> </span><span
+              class="crayon-e ">content</span><span class="crayon-o">=</span><span class="crayon-s ">"initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width"</span><span
+              class="crayon-r ">&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f55372372449322931-7"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;title&gt;</span><span class="crayon-r ">&lt;/title&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f55372372449322931-8"><span class="crayon-r ">&lt;/head&gt;</span>
+            </div>
+            <div class="crayon-line" id="crayon-5628f55372372449322931-9">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f55372372449322931-10">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f55372372449322931-11"><span class="crayon-r ">&lt;body&gt;</span>
+            </div>
+            <div class="crayon-line" id="crayon-5628f55372372449322931-12"><span
+              class="crayon-i ">&nbsp;&nbsp;</span><span class="crayon-r ">&lt;ion-nav-bar&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f55372372449322931-13"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;ion-nav-back-button </span><span class="crayon-e ">class</span><span
+              class="crayon-o">=</span><span class="crayon-s ">"button-clear"</span><span class="crayon-r ">&gt;</span>
+            </div>
+            <div class="crayon-line" id="crayon-5628f55372372449322931-14"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;i </span><span class="crayon-e ">class</span><span class="crayon-o">=</span><span
+              class="crayon-s ">"ion-arrow-left-c"</span><span class="crayon-r ">&gt;</span><span class="crayon-r ">&lt;/i&gt;</span><span
+              class="crayon-i "> Back</span></div>
+            <div class="crayon-line" id="crayon-5628f55372372449322931-15"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;/ion-nav-back-button&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f55372372449322931-16"><span
+              class="crayon-i ">&nbsp;&nbsp;</span><span class="crayon-r ">&lt;/ion-nav-bar&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f55372372449322931-17"><span
+              class="crayon-i ">&nbsp;&nbsp;</span><span class="crayon-r ">&lt;ion-nav-view&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f55372372449322931-18"><span
+              class="crayon-i ">&nbsp;&nbsp;</span><span class="crayon-r ">&lt;/ion-nav-view&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f55372372449322931-19"><span class="crayon-r ">&lt;/body&gt;</span>
+            </div>
+            <div class="crayon-line" id="crayon-5628f55372372449322931-20">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f55372372449322931-21">&nbsp;</div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div> <!-- [Format Time: 0.0014 seconds] --> <p>We just placed a <code>navbar</code> with a defined back button and a
+  navigation view.</p> <p>Now it&#8217;s time to start <strong>AngularJS</strong> application. We will place the basic
+  code for the Angular module in the <code>app.js</code> file as show below</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+<div id="crayon-5628f5537237e800720555"
+     class="crayon-syntax crayon-theme-obsidian crayon-font-monaco crayon-os-pc print-yes notranslate"
+     data-settings=" minimize scroll-mouseover"
+     style=" margin-top: 12px; margin-bottom: 12px; margin-left: -50px; margin-right: -50px; float: none; margin-left: auto; margin-right: auto; font-size: 12px !important; line-height: 15px !important;">
+  <div class="crayon-toolbar" data-settings=" mouseover overlay hide delay"
+       style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span
+    class="crayon-title"></span>
+
+    <div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;">
+      <div class="crayon-button crayon-nums-button" title="Toggle Line Numbers">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-plain-button" title="Toggle Plain Code">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-wrap-button" title="Toggle Line Wrap">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-expand-button" title="Expand Code">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-copy-button" title="Copy">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-popup-button" title="Open Code In New Window">
+        <div class="crayon-button-icon"></div>
+      </div>
+    </div>
+  </div>
+  <div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+  <div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly
+                                           style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;"> angular.module('starter', ['angular-meteor', 'ui.router', 'ionic', 'ngCordova']) .run(function($ionicPlatform) { $ionicPlatform.ready(function() { if (window.cordova &amp;&amp; window.cordova.plugins.Keyboard) { cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true); cordova.plugins.Keyboard.disableScroll(true); } if (window.StatusBar) { // org.apache.cordova.statusbar required StatusBar.styleDefault(); } }); }); function onReady() { angular.bootstrap(document, ['starter']); } if (Meteor.isCordova) { angular.element(document).on("deviceready", onReady); } else { angular.element(document).ready(onReady); } </textarea>
+  </div>
+  <div class="crayon-main" style="">
+    <table class="crayon-table">
+      <tr class="crayon-row">
+        <td class="crayon-nums " data-settings="hide">
+          <div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;">
+            <div class="crayon-num" data-line="crayon-5628f5537237e800720555-1">1</div>
+            <div class="crayon-num" data-line="crayon-5628f5537237e800720555-2">2</div>
+            <div class="crayon-num" data-line="crayon-5628f5537237e800720555-3">3</div>
+            <div class="crayon-num" data-line="crayon-5628f5537237e800720555-4">4</div>
+            <div class="crayon-num" data-line="crayon-5628f5537237e800720555-5">5</div>
+            <div class="crayon-num" data-line="crayon-5628f5537237e800720555-6">6</div>
+            <div class="crayon-num" data-line="crayon-5628f5537237e800720555-7">7</div>
+            <div class="crayon-num" data-line="crayon-5628f5537237e800720555-8">8</div>
+            <div class="crayon-num" data-line="crayon-5628f5537237e800720555-9">9</div>
+            <div class="crayon-num" data-line="crayon-5628f5537237e800720555-10">10</div>
+            <div class="crayon-num" data-line="crayon-5628f5537237e800720555-11">11</div>
+            <div class="crayon-num" data-line="crayon-5628f5537237e800720555-12">12</div>
+            <div class="crayon-num" data-line="crayon-5628f5537237e800720555-13">13</div>
+            <div class="crayon-num" data-line="crayon-5628f5537237e800720555-14">14</div>
+            <div class="crayon-num" data-line="crayon-5628f5537237e800720555-15">15</div>
+            <div class="crayon-num" data-line="crayon-5628f5537237e800720555-16">16</div>
+            <div class="crayon-num" data-line="crayon-5628f5537237e800720555-17">17</div>
+            <div class="crayon-num" data-line="crayon-5628f5537237e800720555-18">18</div>
+            <div class="crayon-num" data-line="crayon-5628f5537237e800720555-19">19</div>
+            <div class="crayon-num" data-line="crayon-5628f5537237e800720555-20">20</div>
+            <div class="crayon-num" data-line="crayon-5628f5537237e800720555-21">21</div>
+            <div class="crayon-num" data-line="crayon-5628f5537237e800720555-22">22</div>
+            <div class="crayon-num" data-line="crayon-5628f5537237e800720555-23">23</div>
+            <div class="crayon-num" data-line="crayon-5628f5537237e800720555-24">24</div>
+            <div class="crayon-num" data-line="crayon-5628f5537237e800720555-25">25</div>
+            <div class="crayon-num" data-line="crayon-5628f5537237e800720555-26">26</div>
+            <div class="crayon-num" data-line="crayon-5628f5537237e800720555-27">27</div>
+            <div class="crayon-num" data-line="crayon-5628f5537237e800720555-28">28</div>
+            <div class="crayon-num" data-line="crayon-5628f5537237e800720555-29">29</div>
+            <div class="crayon-num" data-line="crayon-5628f5537237e800720555-30">30</div>
+            <div class="crayon-num" data-line="crayon-5628f5537237e800720555-31">31</div>
+            <div class="crayon-num" data-line="crayon-5628f5537237e800720555-32">32</div>
+            <div class="crayon-num" data-line="crayon-5628f5537237e800720555-33">33</div>
+            <div class="crayon-num" data-line="crayon-5628f5537237e800720555-34">34</div>
+            <div class="crayon-num" data-line="crayon-5628f5537237e800720555-35">35</div>
+          </div>
+        </td>
+        <td class="crayon-code">
+          <div class="crayon-pre"
+               style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;">
+            <div class="crayon-line" id="crayon-5628f5537237e800720555-1">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f5537237e800720555-2">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f5537237e800720555-3"><span class="crayon-v">angular</span><span
+              class="crayon-sy">.</span><span class="crayon-e">module</span><span class="crayon-sy">(</span><span
+              class="crayon-s">'starter'</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span
+              class="crayon-sy">[</span><span class="crayon-s">'angular-meteor'</span><span class="crayon-sy">,</span>
+            </div>
+            <div class="crayon-line" id="crayon-5628f5537237e800720555-4"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-s">'ui.router'</span><span class="crayon-sy">,</span></div>
+            <div class="crayon-line" id="crayon-5628f5537237e800720555-5"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-s">'ionic'</span><span class="crayon-sy">,</span></div>
+            <div class="crayon-line" id="crayon-5628f5537237e800720555-6"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-s">'ngCordova'</span><span class="crayon-sy">]</span><span class="crayon-sy">)</span></div>
+            <div class="crayon-line" id="crayon-5628f5537237e800720555-7">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f5537237e800720555-8">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f5537237e800720555-9"><span class="crayon-sy">.</span><span
+              class="crayon-e">run</span><span class="crayon-sy">(</span><span class="crayon-t">function</span><span
+              class="crayon-sy">(</span><span class="crayon-sy">$</span><span class="crayon-v">ionicPlatform</span><span
+              class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div>
+            <div class="crayon-line" id="crayon-5628f5537237e800720555-10"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-sy">$</span><span class="crayon-v">ionicPlatform</span><span class="crayon-sy">.</span><span
+              class="crayon-e">ready</span><span class="crayon-sy">(</span><span class="crayon-t">function</span><span
+              class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span
+              class="crayon-sy">{</span></div>
+            <div class="crayon-line" id="crayon-5628f5537237e800720555-11"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-st">if</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span
+              class="crayon-v">window</span><span class="crayon-sy">.</span><span class="crayon-v">cordova</span><span
+              class="crayon-h"> </span><span class="crayon-o">&amp;&amp;</span><span class="crayon-h"> </span><span
+              class="crayon-v">window</span><span class="crayon-sy">.</span><span class="crayon-v">cordova</span><span
+              class="crayon-sy">.</span><span class="crayon-v">plugins</span><span class="crayon-sy">.</span><span
+              class="crayon-v">Keyboard</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span
+              class="crayon-sy">{</span></div>
+            <div class="crayon-line" id="crayon-5628f5537237e800720555-12"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-v">cordova</span><span class="crayon-sy">.</span><span class="crayon-v">plugins</span><span
+              class="crayon-sy">.</span><span class="crayon-v">Keyboard</span><span class="crayon-sy">.</span><span
+              class="crayon-e">hideKeyboardAccessoryBar</span><span class="crayon-sy">(</span><span class="crayon-t">true</span><span
+              class="crayon-sy">)</span><span class="crayon-sy">;</span></div>
+            <div class="crayon-line" id="crayon-5628f5537237e800720555-13"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-v">cordova</span><span class="crayon-sy">.</span><span class="crayon-v">plugins</span><span
+              class="crayon-sy">.</span><span class="crayon-v">Keyboard</span><span class="crayon-sy">.</span><span
+              class="crayon-e">disableScroll</span><span class="crayon-sy">(</span><span
+              class="crayon-t">true</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div>
+            <div class="crayon-line" id="crayon-5628f5537237e800720555-14">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f5537237e800720555-15"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-sy">}</span></div>
+            <div class="crayon-line" id="crayon-5628f5537237e800720555-16"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-st">if</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span
+              class="crayon-v">window</span><span class="crayon-sy">.</span><span class="crayon-v">StatusBar</span><span
+              class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div>
+            <div class="crayon-line" id="crayon-5628f5537237e800720555-17"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-c">// org.apache.cordova.statusbar required</span></div>
+            <div class="crayon-line" id="crayon-5628f5537237e800720555-18"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-v">StatusBar</span><span class="crayon-sy">.</span><span
+              class="crayon-e">styleDefault</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span
+              class="crayon-sy">;</span></div>
+            <div class="crayon-line" id="crayon-5628f5537237e800720555-19"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-sy">}</span></div>
+            <div class="crayon-line" id="crayon-5628f5537237e800720555-20"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-sy">}</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div>
+            <div class="crayon-line" id="crayon-5628f5537237e800720555-21"><span class="crayon-sy">}</span><span
+              class="crayon-sy">)</span><span class="crayon-sy">;</span></div>
+            <div class="crayon-line" id="crayon-5628f5537237e800720555-22">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f5537237e800720555-23">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f5537237e800720555-24"><span class="crayon-t">function</span><span
+              class="crayon-h"> </span><span class="crayon-e">onReady</span><span class="crayon-sy">(</span><span
+              class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div>
+            <div class="crayon-line" id="crayon-5628f5537237e800720555-25"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-v">angular</span><span class="crayon-sy">.</span><span
+              class="crayon-e">bootstrap</span><span class="crayon-sy">(</span><span
+              class="crayon-v">document</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span
+              class="crayon-sy">[</span><span class="crayon-s">'starter'</span><span class="crayon-sy">]</span><span
+              class="crayon-sy">)</span><span class="crayon-sy">;</span></div>
+            <div class="crayon-line" id="crayon-5628f5537237e800720555-26"><span class="crayon-sy">}</span></div>
+            <div class="crayon-line" id="crayon-5628f5537237e800720555-27">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f5537237e800720555-28"><span class="crayon-st">if</span><span
+              class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-v">Meteor</span><span
+              class="crayon-sy">.</span><span class="crayon-v">isCordova</span><span class="crayon-sy">)</span><span
+              class="crayon-h"> </span><span class="crayon-sy">{</span></div>
+            <div class="crayon-line" id="crayon-5628f5537237e800720555-29"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-v">angular</span><span class="crayon-sy">.</span><span class="crayon-e">element</span><span
+              class="crayon-sy">(</span><span class="crayon-v">document</span><span class="crayon-sy">)</span><span
+              class="crayon-sy">.</span><span class="crayon-e">on</span><span class="crayon-sy">(</span><span
+              class="crayon-s">"deviceready"</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span
+              class="crayon-v">onReady</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div>
+            <div class="crayon-line" id="crayon-5628f5537237e800720555-30"><span class="crayon-sy">}</span></div>
+            <div class="crayon-line" id="crayon-5628f5537237e800720555-31"><span class="crayon-st">else</span><span
+              class="crayon-h"> </span><span class="crayon-sy">{</span></div>
+            <div class="crayon-line" id="crayon-5628f5537237e800720555-32"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-v">angular</span><span class="crayon-sy">.</span><span class="crayon-e">element</span><span
+              class="crayon-sy">(</span><span class="crayon-v">document</span><span class="crayon-sy">)</span><span
+              class="crayon-sy">.</span><span class="crayon-e">ready</span><span class="crayon-sy">(</span><span
+              class="crayon-v">onReady</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div>
+            <div class="crayon-line" id="crayon-5628f5537237e800720555-33"><span class="crayon-sy">}</span></div>
+            <div class="crayon-line" id="crayon-5628f5537237e800720555-34">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f5537237e800720555-35">&nbsp;</div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div> <!-- [Format Time: 0.0045 seconds] --> <p>As you can see after initializing the application module we set some
+  directive to make <strong>Ionic</strong> and <strong>Meteor</strong> working well on mobile devices and also started
+  our <strong>Angular</strong> application on the <strong>Meteor</strong> deviceready event.</p> <p>To get a taste of
+  the Ionic application working together with <strong>Meteor</strong> we have to define a route and a basics <strong>Angular</strong>
+  controller. Let&#8217;s start by editing the <code>routes.js</code> file.</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+<div id="crayon-5628f5537238a313274580"
+     class="crayon-syntax crayon-theme-obsidian crayon-font-monaco crayon-os-pc print-yes notranslate"
+     data-settings=" minimize scroll-mouseover"
+     style=" margin-top: 12px; margin-bottom: 12px; margin-left: -50px; margin-right: -50px; float: none; margin-left: auto; margin-right: auto; font-size: 12px !important; line-height: 15px !important;">
+  <div class="crayon-toolbar" data-settings=" mouseover overlay hide delay"
+       style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span
+    class="crayon-title">routes.js</span>
+
+    <div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;">
+      <div class="crayon-button crayon-nums-button" title="Toggle Line Numbers">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-plain-button" title="Toggle Plain Code">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-wrap-button" title="Toggle Line Wrap">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-expand-button" title="Expand Code">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-copy-button" title="Copy">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-popup-button" title="Open Code In New Window">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <span class="crayon-language">JavaScript</span></div>
+  </div>
+  <div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+  <div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly
+                                           style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;"> angular.module("starter") .config(function($stateProvider, $urlRouterProvider) { $stateProvider .state('main', { url: '/main', templateUrl: 'client/main/views/main.ng.html', controller: 'MainCtrl' }); $urlRouterProvider.otherwise('/main'); }); </textarea>
+  </div>
+  <div class="crayon-main" style="">
+    <table class="crayon-table">
+      <tr class="crayon-row">
+        <td class="crayon-nums " data-settings="hide">
+          <div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;">
+            <div class="crayon-num" data-line="crayon-5628f5537238a313274580-1">1</div>
+            <div class="crayon-num" data-line="crayon-5628f5537238a313274580-2">2</div>
+            <div class="crayon-num" data-line="crayon-5628f5537238a313274580-3">3</div>
+            <div class="crayon-num" data-line="crayon-5628f5537238a313274580-4">4</div>
+            <div class="crayon-num" data-line="crayon-5628f5537238a313274580-5">5</div>
+            <div class="crayon-num" data-line="crayon-5628f5537238a313274580-6">6</div>
+            <div class="crayon-num" data-line="crayon-5628f5537238a313274580-7">7</div>
+            <div class="crayon-num" data-line="crayon-5628f5537238a313274580-8">8</div>
+            <div class="crayon-num" data-line="crayon-5628f5537238a313274580-9">9</div>
+            <div class="crayon-num" data-line="crayon-5628f5537238a313274580-10">10</div>
+            <div class="crayon-num" data-line="crayon-5628f5537238a313274580-11">11</div>
+            <div class="crayon-num" data-line="crayon-5628f5537238a313274580-12">12</div>
+            <div class="crayon-num" data-line="crayon-5628f5537238a313274580-13">13</div>
+            <div class="crayon-num" data-line="crayon-5628f5537238a313274580-14">14</div>
+            <div class="crayon-num" data-line="crayon-5628f5537238a313274580-15">15</div>
+          </div>
+        </td>
+        <td class="crayon-code">
+          <div class="crayon-pre"
+               style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;">
+            <div class="crayon-line" id="crayon-5628f5537238a313274580-1">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f5537238a313274580-2">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f5537238a313274580-3"><span class="crayon-v">angular</span><span
+              class="crayon-sy">.</span><span class="crayon-e">module</span><span class="crayon-sy">(</span><span
+              class="crayon-s">"starter"</span><span class="crayon-sy">)</span></div>
+            <div class="crayon-line" id="crayon-5628f5537238a313274580-4"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-sy">.</span><span class="crayon-e">config</span><span class="crayon-sy">(</span><span
+              class="crayon-t">function</span><span class="crayon-sy">(</span><span class="crayon-sy">$</span><span
+              class="crayon-v">stateProvider</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span
+              class="crayon-sy">$</span><span class="crayon-v">urlRouterProvider</span><span
+              class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div>
+            <div class="crayon-line" id="crayon-5628f5537238a313274580-5"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-sy">$</span><span class="crayon-i">stateProvider</span></div>
+            <div class="crayon-line" id="crayon-5628f5537238a313274580-6"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-sy">.</span><span class="crayon-e">state</span><span class="crayon-sy">(</span><span
+              class="crayon-s">'main'</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span
+              class="crayon-sy">{</span></div>
+            <div class="crayon-line" id="crayon-5628f5537238a313274580-7"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-v">url</span><span class="crayon-o">:</span><span class="crayon-h"> </span><span
+              class="crayon-s">'/main'</span><span class="crayon-sy">,</span></div>
+            <div class="crayon-line" id="crayon-5628f5537238a313274580-8"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-v">templateUrl</span><span class="crayon-o">:</span><span class="crayon-h"> </span><span
+              class="crayon-s">'client/main/views/main.ng.html'</span><span class="crayon-sy">,</span></div>
+            <div class="crayon-line" id="crayon-5628f5537238a313274580-9"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-v">controller</span><span class="crayon-o">:</span><span class="crayon-h"> </span><span
+              class="crayon-s">'MainCtrl'</span></div>
+            <div class="crayon-line" id="crayon-5628f5537238a313274580-10"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-sy">}</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div>
+            <div class="crayon-line" id="crayon-5628f5537238a313274580-11">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f5537238a313274580-12"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-sy">$</span><span class="crayon-v">urlRouterProvider</span><span
+              class="crayon-sy">.</span><span class="crayon-e">otherwise</span><span class="crayon-sy">(</span><span
+              class="crayon-s">'/main'</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div>
+            <div class="crayon-line" id="crayon-5628f5537238a313274580-13"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-sy">}</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div>
+            <div class="crayon-line" id="crayon-5628f5537238a313274580-14">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f5537238a313274580-15">&nbsp;</div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div> <!-- [Format Time: 0.0021 seconds] --> <p>then in the MainCtrl.js file
+  place</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+<div id="crayon-5628f55372395433214767"
+     class="crayon-syntax crayon-theme-obsidian crayon-font-monaco crayon-os-pc print-yes notranslate"
+     data-settings=" minimize scroll-mouseover"
+     style=" margin-top: 12px; margin-bottom: 12px; margin-left: -50px; margin-right: -50px; float: none; margin-left: auto; margin-right: auto; font-size: 12px !important; line-height: 15px !important;">
+  <div class="crayon-toolbar" data-settings=" mouseover overlay hide delay"
+       style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span
+    class="crayon-title">mainCtrl.js</span>
+
+    <div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;">
+      <div class="crayon-button crayon-nums-button" title="Toggle Line Numbers">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-plain-button" title="Toggle Plain Code">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-wrap-button" title="Toggle Line Wrap">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-expand-button" title="Expand Code">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-copy-button" title="Copy">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-popup-button" title="Open Code In New Window">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <span class="crayon-language">JavaScript</span></div>
+  </div>
+  <div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+  <div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly
+                                           style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;"> angular.module("starter") .controller('MainCtrl', function($scope,$state,$stateParams,$ionicModal,$meteor) { }); </textarea>
+  </div>
+  <div class="crayon-main" style="">
+    <table class="crayon-table">
+      <tr class="crayon-row">
+        <td class="crayon-nums " data-settings="hide">
+          <div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;">
+            <div class="crayon-num" data-line="crayon-5628f55372395433214767-1">1</div>
+            <div class="crayon-num" data-line="crayon-5628f55372395433214767-2">2</div>
+            <div class="crayon-num" data-line="crayon-5628f55372395433214767-3">3</div>
+            <div class="crayon-num" data-line="crayon-5628f55372395433214767-4">4</div>
+            <div class="crayon-num" data-line="crayon-5628f55372395433214767-5">5</div>
+            <div class="crayon-num" data-line="crayon-5628f55372395433214767-6">6</div>
+            <div class="crayon-num" data-line="crayon-5628f55372395433214767-7">7</div>
+          </div>
+        </td>
+        <td class="crayon-code">
+          <div class="crayon-pre"
+               style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;">
+            <div class="crayon-line" id="crayon-5628f55372395433214767-1">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f55372395433214767-2">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f55372395433214767-3"><span class="crayon-v">angular</span><span
+              class="crayon-sy">.</span><span class="crayon-e">module</span><span class="crayon-sy">(</span><span
+              class="crayon-s">"starter"</span><span class="crayon-sy">)</span></div>
+            <div class="crayon-line" id="crayon-5628f55372395433214767-4"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-sy">.</span><span class="crayon-e">controller</span><span class="crayon-sy">(</span><span
+              class="crayon-s">'MainCtrl'</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span
+              class="crayon-t">function</span><span class="crayon-sy">(</span><span class="crayon-sy">$</span><span
+              class="crayon-v">scope</span><span class="crayon-sy">,</span><span class="crayon-sy">$</span><span
+              class="crayon-v">state</span><span class="crayon-sy">,</span><span class="crayon-sy">$</span><span
+              class="crayon-v">stateParams</span><span class="crayon-sy">,</span><span class="crayon-sy">$</span><span
+              class="crayon-v">ionicModal</span><span class="crayon-sy">,</span><span class="crayon-sy">$</span><span
+              class="crayon-v">meteor</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span
+              class="crayon-sy">{</span></div>
+            <div class="crayon-line" id="crayon-5628f55372395433214767-5"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-sy">}</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div>
+            <div class="crayon-line" id="crayon-5628f55372395433214767-6">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f55372395433214767-7">&nbsp;</div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div> <!-- [Format Time: 0.0011 seconds] --> <p>Last thing before starting the application is the main
+  view</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+<div id="crayon-5628f5537239f293110923"
+     class="crayon-syntax crayon-theme-obsidian crayon-font-monaco crayon-os-pc print-yes notranslate"
+     data-settings=" minimize scroll-mouseover"
+     style=" margin-top: 12px; margin-bottom: 12px; margin-left: -50px; margin-right: -50px; float: none; margin-left: auto; margin-right: auto; font-size: 12px !important; line-height: 15px !important;">
+  <div class="crayon-toolbar" data-settings=" mouseover overlay hide delay"
+       style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span
+    class="crayon-title"></span>
+
+    <div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;">
+      <div class="crayon-button crayon-nums-button" title="Toggle Line Numbers">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-plain-button" title="Toggle Plain Code">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-wrap-button" title="Toggle Line Wrap">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-expand-button" title="Expand Code">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-copy-button" title="Copy">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-popup-button" title="Open Code In New Window">
+        <div class="crayon-button-icon"></div>
+      </div>
+    </div>
+  </div>
+  <div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+  <div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly
+                                           style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;"> &lt;ion-view view-title="Posts"&gt; &lt;ion-nav-buttons side="secondary"&gt; &lt;button class="button button-icon icon ion-plus-round" ng-click="openPost()"&gt; &lt;/button&gt; &lt;/ion-nav-buttons&gt; &lt;ion-content &gt; &lt;h2&gt;This is the main view&lt;/h2&gt; &lt;/ion-content&gt; &lt;/ion-view&gt; </textarea>
+  </div>
+  <div class="crayon-main" style="">
+    <table class="crayon-table">
+      <tr class="crayon-row">
+        <td class="crayon-nums " data-settings="hide">
+          <div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;">
+            <div class="crayon-num" data-line="crayon-5628f5537239f293110923-1">1</div>
+            <div class="crayon-num" data-line="crayon-5628f5537239f293110923-2">2</div>
+            <div class="crayon-num" data-line="crayon-5628f5537239f293110923-3">3</div>
+            <div class="crayon-num" data-line="crayon-5628f5537239f293110923-4">4</div>
+            <div class="crayon-num" data-line="crayon-5628f5537239f293110923-5">5</div>
+            <div class="crayon-num" data-line="crayon-5628f5537239f293110923-6">6</div>
+            <div class="crayon-num" data-line="crayon-5628f5537239f293110923-7">7</div>
+            <div class="crayon-num" data-line="crayon-5628f5537239f293110923-8">8</div>
+            <div class="crayon-num" data-line="crayon-5628f5537239f293110923-9">9</div>
+            <div class="crayon-num" data-line="crayon-5628f5537239f293110923-10">10</div>
+            <div class="crayon-num" data-line="crayon-5628f5537239f293110923-11">11</div>
+            <div class="crayon-num" data-line="crayon-5628f5537239f293110923-12">12</div>
+            <div class="crayon-num" data-line="crayon-5628f5537239f293110923-13">13</div>
+            <div class="crayon-num" data-line="crayon-5628f5537239f293110923-14">14</div>
+          </div>
+        </td>
+        <td class="crayon-code">
+          <div class="crayon-pre"
+               style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;">
+            <div class="crayon-line" id="crayon-5628f5537239f293110923-1">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f5537239f293110923-2">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f5537239f293110923-3"><span class="crayon-o">&lt;</span><span
+              class="crayon-v">ion</span><span class="crayon-o">-</span><span class="crayon-e">view </span><span
+              class="crayon-v">view</span><span class="crayon-o">-</span><span class="crayon-v">title</span><span
+              class="crayon-o">=</span><span class="crayon-s">"Posts"</span><span class="crayon-o">&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f5537239f293110923-4"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-o">&lt;</span><span class="crayon-v">ion</span><span class="crayon-o">-</span><span
+              class="crayon-v">nav</span><span class="crayon-o">-</span><span class="crayon-e">buttons </span><span
+              class="crayon-v">side</span><span class="crayon-o">=</span><span class="crayon-s">"secondary"</span><span
+              class="crayon-o">&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f5537239f293110923-5"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-o">&lt;</span><span class="crayon-e">button </span><span class="crayon-t">class</span><span
+              class="crayon-o">=</span><span class="crayon-s">"button button-icon icon ion-plus-round"</span><span
+              class="crayon-h"> </span><span class="crayon-v">ng</span><span class="crayon-o">-</span><span
+              class="crayon-v">click</span><span class="crayon-o">=</span><span
+              class="crayon-s">"openPost()"</span><span class="crayon-o">&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f5537239f293110923-6"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-o">&lt;</span><span class="crayon-o">/</span><span class="crayon-v">button</span><span
+              class="crayon-o">&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f5537239f293110923-7"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-o">&lt;</span><span class="crayon-o">/</span><span class="crayon-v">ion</span><span
+              class="crayon-o">-</span><span class="crayon-v">nav</span><span class="crayon-o">-</span><span
+              class="crayon-v">buttons</span><span class="crayon-o">&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f5537239f293110923-8">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f5537239f293110923-9"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-o">&lt;</span><span class="crayon-v">ion</span><span class="crayon-o">-</span><span
+              class="crayon-v">content</span><span class="crayon-h"> </span><span class="crayon-o">&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f5537239f293110923-10"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-o">&lt;</span><span class="crayon-v">h2</span><span class="crayon-o">&gt;</span><span
+              class="crayon-r">This</span><span class="crayon-h"> </span><span class="crayon-st">is</span><span
+              class="crayon-h"> </span><span class="crayon-e">the </span><span class="crayon-e">main </span><span
+              class="crayon-v">view</span><span class="crayon-o">&lt;</span><span class="crayon-o">/</span><span
+              class="crayon-v">h2</span><span class="crayon-o">&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f5537239f293110923-11"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-o">&lt;</span><span class="crayon-o">/</span><span class="crayon-v">ion</span><span
+              class="crayon-o">-</span><span class="crayon-v">content</span><span class="crayon-o">&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f5537239f293110923-12"><span class="crayon-o">&lt;</span><span
+              class="crayon-o">/</span><span class="crayon-v">ion</span><span class="crayon-o">-</span><span
+              class="crayon-v">view</span><span class="crayon-o">&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f5537239f293110923-13">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f5537239f293110923-14">&nbsp;</div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div> <!-- [Format Time: 0.0022 seconds] --> <p>In the main view we already defined the <strong>navbar plus
+  button</strong> to add posts in our application and a provisory title to see if the application till now was made well
+  and run in the device.</p> <p>At the moment you can test the application in the browser as we didn&#8217;t use any
+  specific platform functionality like the <strong>Camera</strong>. The result will be something like shown in the
+  screenshot below<a
+    href="https://www.codetutorial.io/wordpress/wp-content/uploads/2015/10/Schermata-2015-10-12-alle-23.01.01.png"><img
+    class="wp-image-812 size-medium aligncenter"
+    src="https://www.codetutorial.io/wordpress/wp-content/uploads/2015/10/Schermata-2015-10-12-alle-23.01.01-194x300.png"
+    alt="Schermata 2015-10-12 alle 23.01.01" width="194" height="300"/></a></p>
+<div class='mailmunch-forms-in-post-middle' style='display: none !important;'></div> <p>Now that all piece are in place
+  we can start some serious coding. First of all we want Meteor to publish a <code>Posts</code> collection and we want
+  to link it to an array in the Angular application.</p> <p>In the <code>post.js</code> file into the model folder add a
+  single line of code to make the magic happen.</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+<div id="crayon-5628f553723ab911036378"
+     class="crayon-syntax crayon-theme-obsidian crayon-font-monaco crayon-os-pc print-yes notranslate"
+     data-settings=" minimize scroll-mouseover"
+     style=" margin-top: 12px; margin-bottom: 12px; margin-left: -50px; margin-right: -50px; float: none; margin-left: auto; margin-right: auto; font-size: 12px !important; line-height: 15px !important;">
+  <div class="crayon-toolbar" data-settings=" mouseover overlay hide delay"
+       style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span
+    class="crayon-title">post.js</span>
+
+    <div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;">
+      <div class="crayon-button crayon-nums-button" title="Toggle Line Numbers">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-plain-button" title="Toggle Plain Code">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-wrap-button" title="Toggle Line Wrap">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-expand-button" title="Expand Code">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-copy-button" title="Copy">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-popup-button" title="Open Code In New Window">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <span class="crayon-language">JavaScript</span></div>
+  </div>
+  <div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+  <div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly
+                                           style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;"> Posts = new Mongo.Collection("posts"); </textarea>
+  </div>
+  <div class="crayon-main" style="">
+    <table class="crayon-table">
+      <tr class="crayon-row">
+        <td class="crayon-nums " data-settings="hide">
+          <div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;">
+            <div class="crayon-num" data-line="crayon-5628f553723ab911036378-1">1</div>
+            <div class="crayon-num" data-line="crayon-5628f553723ab911036378-2">2</div>
+            <div class="crayon-num" data-line="crayon-5628f553723ab911036378-3">3</div>
+            <div class="crayon-num" data-line="crayon-5628f553723ab911036378-4">4</div>
+            <div class="crayon-num" data-line="crayon-5628f553723ab911036378-5">5</div>
+          </div>
+        </td>
+        <td class="crayon-code">
+          <div class="crayon-pre"
+               style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;">
+            <div class="crayon-line" id="crayon-5628f553723ab911036378-1">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f553723ab911036378-2">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f553723ab911036378-3"><span class="crayon-v">Posts</span><span
+              class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span
+              class="crayon-r">new</span><span class="crayon-h"> </span><span class="crayon-v">Mongo</span><span
+              class="crayon-sy">.</span><span class="crayon-e">Collection</span><span class="crayon-sy">(</span><span
+              class="crayon-s">"posts"</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723ab911036378-4">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f553723ab911036378-5">&nbsp;</div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div> <!-- [Format Time: 0.0005 seconds] --> <p>In the mainCtrl.js file we want to bind this collection to an Angular
+  array.</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+<div id="crayon-5628f553723b5517227312"
+     class="crayon-syntax crayon-theme-obsidian crayon-font-monaco crayon-os-pc print-yes notranslate"
+     data-settings=" minimize scroll-mouseover"
+     style=" margin-top: 12px; margin-bottom: 12px; margin-left: -50px; margin-right: -50px; float: none; margin-left: auto; margin-right: auto; font-size: 12px !important; line-height: 15px !important;">
+  <div class="crayon-toolbar" data-settings=" mouseover overlay hide delay"
+       style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span
+    class="crayon-title">mainCtrl.js</span>
+
+    <div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;">
+      <div class="crayon-button crayon-nums-button" title="Toggle Line Numbers">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-plain-button" title="Toggle Plain Code">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-wrap-button" title="Toggle Line Wrap">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-expand-button" title="Expand Code">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-copy-button" title="Copy">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-popup-button" title="Open Code In New Window">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <span class="crayon-language">JavaScript</span></div>
+  </div>
+  <div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+  <div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly
+                                           style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;"> angular.module("starter") .controller('MainCtrl', function($scope,$state,$stateParams,$ionicModal,$meteor,$cordovaCamera) { $scope.posts = $meteor.collection(Posts); $scope.newPost={}; $scope.post = function () { $scope.newPost.like=0; $scope.newPost.comments=[]; $scope.posts.push( $scope.newPost); $scope.newPost={}; $scope.closePost(); }; $scope.likePost= function(index){ console.log( $scope.posts[index]); $scope.posts[index].like += 1; }; $ionicModal.fromTemplateUrl('client/main/views/newpost.ng.html', { scope: $scope }).then(function(modal) { $scope.modal = modal; }); $scope.closePost = function() { $scope.modal.hide(); }; $scope.openPost = function() { $scope.modal.show(); }; }); </textarea>
+  </div>
+  <div class="crayon-main" style="">
+    <table class="crayon-table">
+      <tr class="crayon-row">
+        <td class="crayon-nums " data-settings="hide">
+          <div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;">
+            <div class="crayon-num" data-line="crayon-5628f553723b5517227312-1">1</div>
+            <div class="crayon-num" data-line="crayon-5628f553723b5517227312-2">2</div>
+            <div class="crayon-num" data-line="crayon-5628f553723b5517227312-3">3</div>
+            <div class="crayon-num" data-line="crayon-5628f553723b5517227312-4">4</div>
+            <div class="crayon-num" data-line="crayon-5628f553723b5517227312-5">5</div>
+            <div class="crayon-num" data-line="crayon-5628f553723b5517227312-6">6</div>
+            <div class="crayon-num" data-line="crayon-5628f553723b5517227312-7">7</div>
+            <div class="crayon-num" data-line="crayon-5628f553723b5517227312-8">8</div>
+            <div class="crayon-num" data-line="crayon-5628f553723b5517227312-9">9</div>
+            <div class="crayon-num" data-line="crayon-5628f553723b5517227312-10">10</div>
+            <div class="crayon-num" data-line="crayon-5628f553723b5517227312-11">11</div>
+            <div class="crayon-num" data-line="crayon-5628f553723b5517227312-12">12</div>
+            <div class="crayon-num" data-line="crayon-5628f553723b5517227312-13">13</div>
+            <div class="crayon-num" data-line="crayon-5628f553723b5517227312-14">14</div>
+            <div class="crayon-num" data-line="crayon-5628f553723b5517227312-15">15</div>
+            <div class="crayon-num" data-line="crayon-5628f553723b5517227312-16">16</div>
+            <div class="crayon-num" data-line="crayon-5628f553723b5517227312-17">17</div>
+            <div class="crayon-num" data-line="crayon-5628f553723b5517227312-18">18</div>
+            <div class="crayon-num" data-line="crayon-5628f553723b5517227312-19">19</div>
+            <div class="crayon-num" data-line="crayon-5628f553723b5517227312-20">20</div>
+            <div class="crayon-num" data-line="crayon-5628f553723b5517227312-21">21</div>
+            <div class="crayon-num" data-line="crayon-5628f553723b5517227312-22">22</div>
+            <div class="crayon-num" data-line="crayon-5628f553723b5517227312-23">23</div>
+            <div class="crayon-num" data-line="crayon-5628f553723b5517227312-24">24</div>
+            <div class="crayon-num" data-line="crayon-5628f553723b5517227312-25">25</div>
+            <div class="crayon-num" data-line="crayon-5628f553723b5517227312-26">26</div>
+            <div class="crayon-num" data-line="crayon-5628f553723b5517227312-27">27</div>
+            <div class="crayon-num" data-line="crayon-5628f553723b5517227312-28">28</div>
+            <div class="crayon-num" data-line="crayon-5628f553723b5517227312-29">29</div>
+            <div class="crayon-num" data-line="crayon-5628f553723b5517227312-30">30</div>
+            <div class="crayon-num" data-line="crayon-5628f553723b5517227312-31">31</div>
+            <div class="crayon-num" data-line="crayon-5628f553723b5517227312-32">32</div>
+            <div class="crayon-num" data-line="crayon-5628f553723b5517227312-33">33</div>
+            <div class="crayon-num" data-line="crayon-5628f553723b5517227312-34">34</div>
+            <div class="crayon-num" data-line="crayon-5628f553723b5517227312-35">35</div>
+            <div class="crayon-num" data-line="crayon-5628f553723b5517227312-36">36</div>
+            <div class="crayon-num" data-line="crayon-5628f553723b5517227312-37">37</div>
+            <div class="crayon-num" data-line="crayon-5628f553723b5517227312-38">38</div>
+            <div class="crayon-num" data-line="crayon-5628f553723b5517227312-39">39</div>
+          </div>
+        </td>
+        <td class="crayon-code">
+          <div class="crayon-pre"
+               style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;">
+            <div class="crayon-line" id="crayon-5628f553723b5517227312-1">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f553723b5517227312-2">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f553723b5517227312-3"><span class="crayon-v">angular</span><span
+              class="crayon-sy">.</span><span class="crayon-e">module</span><span class="crayon-sy">(</span><span
+              class="crayon-s">"starter"</span><span class="crayon-sy">)</span></div>
+            <div class="crayon-line" id="crayon-5628f553723b5517227312-4"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-sy">.</span><span class="crayon-e">controller</span><span class="crayon-sy">(</span><span
+              class="crayon-s">'MainCtrl'</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span
+              class="crayon-t">function</span><span class="crayon-sy">(</span><span class="crayon-sy">$</span><span
+              class="crayon-v">scope</span><span class="crayon-sy">,</span><span class="crayon-sy">$</span><span
+              class="crayon-v">state</span><span class="crayon-sy">,</span><span class="crayon-sy">$</span><span
+              class="crayon-v">stateParams</span><span class="crayon-sy">,</span><span class="crayon-sy">$</span><span
+              class="crayon-v">ionicModal</span><span class="crayon-sy">,</span><span class="crayon-sy">$</span><span
+              class="crayon-v">meteor</span><span class="crayon-sy">,</span><span class="crayon-sy">$</span><span
+              class="crayon-v">cordovaCamera</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span
+              class="crayon-sy">{</span></div>
+            <div class="crayon-line" id="crayon-5628f553723b5517227312-5"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-sy">$</span><span class="crayon-v">scope</span><span class="crayon-sy">.</span><span
+              class="crayon-v">posts</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span
+              class="crayon-h"> </span><span class="crayon-sy">$</span><span class="crayon-v">meteor</span><span
+              class="crayon-sy">.</span><span class="crayon-e">collection</span><span class="crayon-sy">(</span><span
+              class="crayon-v">Posts</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723b5517227312-6">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f553723b5517227312-7"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-sy">$</span><span class="crayon-v">scope</span><span class="crayon-sy">.</span><span
+              class="crayon-v">newPost</span><span class="crayon-o">=</span><span class="crayon-sy">{</span><span
+              class="crayon-sy">}</span><span class="crayon-sy">;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723b5517227312-8">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f553723b5517227312-9"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-sy">$</span><span class="crayon-v">scope</span><span class="crayon-sy">.</span><span
+              class="crayon-v">post</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span
+              class="crayon-h"> </span><span class="crayon-t">function</span><span class="crayon-h"> </span><span
+              class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span
+              class="crayon-sy">{</span></div>
+            <div class="crayon-line" id="crayon-5628f553723b5517227312-10"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-sy">$</span><span class="crayon-v">scope</span><span class="crayon-sy">.</span><span
+              class="crayon-v">newPost</span><span class="crayon-sy">.</span><span class="crayon-v">like</span><span
+              class="crayon-o">=</span><span class="crayon-cn">0</span><span class="crayon-sy">;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723b5517227312-11"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-sy">$</span><span class="crayon-v">scope</span><span class="crayon-sy">.</span><span
+              class="crayon-v">newPost</span><span class="crayon-sy">.</span><span class="crayon-v">comments</span><span
+              class="crayon-o">=</span><span class="crayon-sy">[</span><span class="crayon-sy">]</span><span
+              class="crayon-sy">;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723b5517227312-12"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-sy">$</span><span class="crayon-v">scope</span><span class="crayon-sy">.</span><span
+              class="crayon-v">posts</span><span class="crayon-sy">.</span><span class="crayon-e">push</span><span
+              class="crayon-sy">(</span><span class="crayon-h"> </span><span class="crayon-sy">$</span><span
+              class="crayon-v">scope</span><span class="crayon-sy">.</span><span class="crayon-v">newPost</span><span
+              class="crayon-sy">)</span><span class="crayon-sy">;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723b5517227312-13"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-sy">$</span><span class="crayon-v">scope</span><span class="crayon-sy">.</span><span
+              class="crayon-v">newPost</span><span class="crayon-o">=</span><span class="crayon-sy">{</span><span
+              class="crayon-sy">}</span><span class="crayon-sy">;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723b5517227312-14"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-sy">$</span><span class="crayon-v">scope</span><span class="crayon-sy">.</span><span
+              class="crayon-e">closePost</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span
+              class="crayon-sy">;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723b5517227312-15">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f553723b5517227312-16"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-sy">}</span><span class="crayon-sy">;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723b5517227312-17">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f553723b5517227312-18"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-sy">$</span><span class="crayon-v">scope</span><span class="crayon-sy">.</span><span
+              class="crayon-v">likePost</span><span class="crayon-o">=</span><span class="crayon-h"> </span><span
+              class="crayon-t">function</span><span class="crayon-sy">(</span><span class="crayon-v">index</span><span
+              class="crayon-sy">)</span><span class="crayon-sy">{</span></div>
+            <div class="crayon-line" id="crayon-5628f553723b5517227312-19"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-v">console</span><span class="crayon-sy">.</span><span class="crayon-e">log</span><span
+              class="crayon-sy">(</span><span class="crayon-h"> </span><span class="crayon-sy">$</span><span
+              class="crayon-v">scope</span><span class="crayon-sy">.</span><span class="crayon-v">posts</span><span
+              class="crayon-sy">[</span><span class="crayon-v">index</span><span class="crayon-sy">]</span><span
+              class="crayon-sy">)</span><span class="crayon-sy">;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723b5517227312-20"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-sy">$</span><span class="crayon-v">scope</span><span class="crayon-sy">.</span><span
+              class="crayon-v">posts</span><span class="crayon-sy">[</span><span class="crayon-v">index</span><span
+              class="crayon-sy">]</span><span class="crayon-sy">.</span><span class="crayon-v">like</span><span
+              class="crayon-h"> </span><span class="crayon-o">+=</span><span class="crayon-h"> </span><span
+              class="crayon-cn">1</span><span class="crayon-sy">;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723b5517227312-21"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-sy">}</span><span class="crayon-sy">;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723b5517227312-22">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f553723b5517227312-23"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-sy">$</span><span class="crayon-v">ionicModal</span><span class="crayon-sy">.</span><span
+              class="crayon-e">fromTemplateUrl</span><span class="crayon-sy">(</span><span class="crayon-s">'client/main/views/newpost.ng.html'</span><span
+              class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div>
+            <div class="crayon-line" id="crayon-5628f553723b5517227312-24"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-v">scope</span><span class="crayon-o">:</span><span class="crayon-h"> </span><span
+              class="crayon-sy">$</span><span class="crayon-i">scope</span></div>
+            <div class="crayon-line" id="crayon-5628f553723b5517227312-25"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-sy">}</span><span class="crayon-sy">)</span><span class="crayon-sy">.</span><span
+              class="crayon-st">then</span><span class="crayon-sy">(</span><span class="crayon-t">function</span><span
+              class="crayon-sy">(</span><span class="crayon-v">modal</span><span class="crayon-sy">)</span><span
+              class="crayon-h"> </span><span class="crayon-sy">{</span></div>
+            <div class="crayon-line" id="crayon-5628f553723b5517227312-26"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-sy">$</span><span class="crayon-v">scope</span><span class="crayon-sy">.</span><span
+              class="crayon-v">modal</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span
+              class="crayon-h"> </span><span class="crayon-v">modal</span><span class="crayon-sy">;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723b5517227312-27"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-sy">}</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723b5517227312-28">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f553723b5517227312-29"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-sy">$</span><span class="crayon-v">scope</span><span class="crayon-sy">.</span><span
+              class="crayon-v">closePost</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span
+              class="crayon-h"> </span><span class="crayon-t">function</span><span class="crayon-sy">(</span><span
+              class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div>
+            <div class="crayon-line" id="crayon-5628f553723b5517227312-30"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-sy">$</span><span class="crayon-v">scope</span><span class="crayon-sy">.</span><span
+              class="crayon-v">modal</span><span class="crayon-sy">.</span><span class="crayon-e">hide</span><span
+              class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723b5517227312-31"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-sy">}</span><span class="crayon-sy">;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723b5517227312-32">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f553723b5517227312-33"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-sy">$</span><span class="crayon-v">scope</span><span class="crayon-sy">.</span><span
+              class="crayon-v">openPost</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span
+              class="crayon-h"> </span><span class="crayon-t">function</span><span class="crayon-sy">(</span><span
+              class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div>
+            <div class="crayon-line" id="crayon-5628f553723b5517227312-34"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-sy">$</span><span class="crayon-v">scope</span><span class="crayon-sy">.</span><span
+              class="crayon-v">modal</span><span class="crayon-sy">.</span><span class="crayon-e">show</span><span
+              class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723b5517227312-35"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-sy">}</span><span class="crayon-sy">;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723b5517227312-36">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f553723b5517227312-37"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-sy">}</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723b5517227312-38">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f553723b5517227312-39">&nbsp;</div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div> <!-- [Format Time: 0.0074 seconds] --> <p>This code need a bit of explanation. In the first line, like said
+  before we have bound the Meteor collection to the AngularJS array. Then we taken a step further declaring a function
+  to insert new post into the collection and another to add a like to a post. Thanks to the <strong>3-ways
+    binding </strong>provided by Meteor no other instruction or server side code is needed to make the post update to
+  all of the client using our application.</p> <p>The last 3 function are relative to the <code>$ionicModal</code>
+  window we need to initialize, show and close when we want to make a new post. The template for the modal is in the
+  <code>newpost.ng.html</code> file and the code is reported below.</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+<div id="crayon-5628f553723c1208483567"
+     class="crayon-syntax crayon-theme-obsidian crayon-font-monaco crayon-os-pc print-yes notranslate"
+     data-settings=" minimize scroll-mouseover"
+     style=" margin-top: 12px; margin-bottom: 12px; margin-left: -50px; margin-right: -50px; float: none; margin-left: auto; margin-right: auto; font-size: 12px !important; line-height: 15px !important;">
+  <div class="crayon-toolbar" data-settings=" mouseover overlay hide delay"
+       style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span
+    class="crayon-title">newpost.ng.html</span>
+
+    <div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;">
+      <div class="crayon-button crayon-nums-button" title="Toggle Line Numbers">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-plain-button" title="Toggle Plain Code">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-wrap-button" title="Toggle Line Wrap">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-expand-button" title="Expand Code">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-copy-button" title="Copy">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-popup-button" title="Open Code In New Window">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <span class="crayon-language">XHTML</span></div>
+  </div>
+  <div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+  <div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly
+                                           style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;"> &lt;ion-modal-view&gt; &lt;ion-header-bar&gt; &lt;h1 class="title"&gt;New Post&lt;/h1&gt; &lt;div class="buttons"&gt; &lt;button class="button button-clear" ng-click="closePost()"&gt;Close&lt;/button&gt; &lt;/div&gt; &lt;/ion-header-bar&gt; &lt;ion-content&gt; &lt;div class="list"&gt; &lt;div class="item item-body"&gt; &lt;img id="myImage" class="full-image"&gt; &lt;/div&gt; &lt;button ng-click="getPhoto()" class="button button-block button-balanced"&gt; Add Photo &lt;/button&gt; &lt;label class="item item-input item-floating-label"&gt; &lt;span class="input-label"&gt;Message&lt;/span&gt; &lt;input ng-model="newPost.message" type="text" placeholder="Message"&gt; &lt;/label&gt; &lt;button ng-disabled="!newPost.message" ng-click="post()" class="button button-block button-positive"&gt; Post &lt;/button&gt; &lt;/div&gt; &lt;/ion-content&gt; &lt;/ion-modal-view&gt; </textarea>
+  </div>
+  <div class="crayon-main" style="">
+    <table class="crayon-table">
+      <tr class="crayon-row">
+        <td class="crayon-nums " data-settings="hide">
+          <div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;">
+            <div class="crayon-num" data-line="crayon-5628f553723c1208483567-1">1</div>
+            <div class="crayon-num" data-line="crayon-5628f553723c1208483567-2">2</div>
+            <div class="crayon-num" data-line="crayon-5628f553723c1208483567-3">3</div>
+            <div class="crayon-num" data-line="crayon-5628f553723c1208483567-4">4</div>
+            <div class="crayon-num" data-line="crayon-5628f553723c1208483567-5">5</div>
+            <div class="crayon-num" data-line="crayon-5628f553723c1208483567-6">6</div>
+            <div class="crayon-num" data-line="crayon-5628f553723c1208483567-7">7</div>
+            <div class="crayon-num" data-line="crayon-5628f553723c1208483567-8">8</div>
+            <div class="crayon-num" data-line="crayon-5628f553723c1208483567-9">9</div>
+            <div class="crayon-num" data-line="crayon-5628f553723c1208483567-10">10</div>
+            <div class="crayon-num" data-line="crayon-5628f553723c1208483567-11">11</div>
+            <div class="crayon-num" data-line="crayon-5628f553723c1208483567-12">12</div>
+            <div class="crayon-num" data-line="crayon-5628f553723c1208483567-13">13</div>
+            <div class="crayon-num" data-line="crayon-5628f553723c1208483567-14">14</div>
+            <div class="crayon-num" data-line="crayon-5628f553723c1208483567-15">15</div>
+            <div class="crayon-num" data-line="crayon-5628f553723c1208483567-16">16</div>
+            <div class="crayon-num" data-line="crayon-5628f553723c1208483567-17">17</div>
+            <div class="crayon-num" data-line="crayon-5628f553723c1208483567-18">18</div>
+            <div class="crayon-num" data-line="crayon-5628f553723c1208483567-19">19</div>
+            <div class="crayon-num" data-line="crayon-5628f553723c1208483567-20">20</div>
+            <div class="crayon-num" data-line="crayon-5628f553723c1208483567-21">21</div>
+            <div class="crayon-num" data-line="crayon-5628f553723c1208483567-22">22</div>
+            <div class="crayon-num" data-line="crayon-5628f553723c1208483567-23">23</div>
+            <div class="crayon-num" data-line="crayon-5628f553723c1208483567-24">24</div>
+            <div class="crayon-num" data-line="crayon-5628f553723c1208483567-25">25</div>
+            <div class="crayon-num" data-line="crayon-5628f553723c1208483567-26">26</div>
+            <div class="crayon-num" data-line="crayon-5628f553723c1208483567-27">27</div>
+            <div class="crayon-num" data-line="crayon-5628f553723c1208483567-28">28</div>
+            <div class="crayon-num" data-line="crayon-5628f553723c1208483567-29">29</div>
+          </div>
+        </td>
+        <td class="crayon-code">
+          <div class="crayon-pre"
+               style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;">
+            <div class="crayon-line" id="crayon-5628f553723c1208483567-1">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f553723c1208483567-2">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f553723c1208483567-3"><span
+              class="crayon-r ">&lt;ion-modal-view&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723c1208483567-4"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;ion-header-bar&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723c1208483567-5"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;h1 </span><span class="crayon-e ">class</span><span class="crayon-o">=</span><span
+              class="crayon-s ">"title"</span><span class="crayon-r ">&gt;</span><span class="crayon-i ">New Post</span><span
+              class="crayon-r ">&lt;/h1&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723c1208483567-6"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;div </span><span class="crayon-e ">class</span><span class="crayon-o">=</span><span
+              class="crayon-s ">"buttons"</span><span class="crayon-r ">&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723c1208483567-7"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;button </span><span class="crayon-e ">class</span><span
+              class="crayon-o">=</span><span class="crayon-s ">"button button-clear"</span><span
+              class="crayon-h"> </span><span class="crayon-e ">ng-click</span><span class="crayon-o">=</span><span
+              class="crayon-s ">"closePost()"</span><span class="crayon-r ">&gt;</span><span
+              class="crayon-i ">Close</span><span class="crayon-r ">&lt;/button&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723c1208483567-8"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;/div&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723c1208483567-9"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;/ion-header-bar&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723c1208483567-10"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;ion-content&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723c1208483567-11"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;div </span><span class="crayon-e ">class</span><span class="crayon-o">=</span><span
+              class="crayon-s ">"list"</span><span class="crayon-r ">&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723c1208483567-12"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;div </span><span class="crayon-e ">class</span><span class="crayon-o">=</span><span
+              class="crayon-s ">"item item-body"</span><span class="crayon-r ">&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723c1208483567-13"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;img </span><span class="crayon-e ">id</span><span class="crayon-o">=</span><span
+              class="crayon-s ">"myImage"</span><span class="crayon-h"> </span><span class="crayon-e ">class</span><span
+              class="crayon-o">=</span><span class="crayon-s ">"full-image"</span><span class="crayon-r ">&gt;</span>
+            </div>
+            <div class="crayon-line" id="crayon-5628f553723c1208483567-14"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;/div&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723c1208483567-15"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;button </span><span class="crayon-e ">ng-click</span><span class="crayon-o">=</span><span
+              class="crayon-s ">"getPhoto()"</span><span class="crayon-h"> </span><span
+              class="crayon-e ">class</span><span class="crayon-o">=</span><span class="crayon-s ">"button button-block button-balanced"</span><span
+              class="crayon-r ">&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723c1208483567-16"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add Photo</span>
+            </div>
+            <div class="crayon-line" id="crayon-5628f553723c1208483567-17"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;/button&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723c1208483567-18"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;label </span><span class="crayon-e ">class</span><span
+              class="crayon-o">=</span><span class="crayon-s ">"item item-input item-floating-label"</span><span
+              class="crayon-r ">&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723c1208483567-19"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;span </span><span class="crayon-e ">class</span><span class="crayon-o">=</span><span
+              class="crayon-s ">"input-label"</span><span class="crayon-r ">&gt;</span><span
+              class="crayon-i ">Message</span><span class="crayon-r ">&lt;/span&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723c1208483567-20"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;input </span><span class="crayon-e ">ng-model</span><span
+              class="crayon-o">=</span><span class="crayon-s ">"newPost.message"</span><span
+              class="crayon-h"> </span><span class="crayon-e ">type</span><span class="crayon-o">=</span><span
+              class="crayon-s ">"text"</span><span class="crayon-h"> </span><span
+              class="crayon-e ">placeholder</span><span class="crayon-o">=</span><span
+              class="crayon-s ">"Message"</span><span class="crayon-r ">&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723c1208483567-21"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;/label&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723c1208483567-22"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;button </span><span class="crayon-e ">ng-disabled</span><span
+              class="crayon-o">=</span><span class="crayon-s ">"!newPost.message"</span><span
+              class="crayon-h"> </span><span class="crayon-e ">ng-click</span><span class="crayon-o">=</span><span
+              class="crayon-s ">"post()"</span><span class="crayon-h"> </span><span class="crayon-e ">class</span><span
+              class="crayon-o">=</span><span class="crayon-s ">"button button-block button-positive"</span><span
+              class="crayon-r ">&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723c1208483567-23"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Post</span>
+            </div>
+            <div class="crayon-line" id="crayon-5628f553723c1208483567-24"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;/button&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723c1208483567-25"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;/div&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723c1208483567-26"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;/ion-content&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723c1208483567-27"><span class="crayon-r ">&lt;/ion-modal-view&gt;</span>
+            </div>
+            <div class="crayon-line" id="crayon-5628f553723c1208483567-28">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f553723c1208483567-29">&nbsp;</div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div> <!-- [Format Time: 0.0028 seconds] --> <p>This a simple Ionic Html view where we used some Angular directive to
+  make it a bit more functional and where we already defined a button to add a photo to our post.</p> <p>Now that we
+  have way to insert new post we can modify also the main view of the application where the added posts will be visible
+  to all the user in realtime. Open the <code>main.ng.html</code> file and change the code to the one show below :
+</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+<div id="crayon-5628f553723cd075217529"
+     class="crayon-syntax crayon-theme-obsidian crayon-font-monaco crayon-os-pc print-yes notranslate"
+     data-settings=" minimize scroll-mouseover"
+     style=" margin-top: 12px; margin-bottom: 12px; margin-left: -50px; margin-right: -50px; float: none; margin-left: auto; margin-right: auto; font-size: 12px !important; line-height: 15px !important;">
+  <div class="crayon-toolbar" data-settings=" mouseover overlay hide delay"
+       style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span
+    class="crayon-title">main.ng.html</span>
+
+    <div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;">
+      <div class="crayon-button crayon-nums-button" title="Toggle Line Numbers">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-plain-button" title="Toggle Plain Code">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-wrap-button" title="Toggle Line Wrap">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-expand-button" title="Expand Code">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-copy-button" title="Copy">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-popup-button" title="Open Code In New Window">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <span class="crayon-language">XHTML</span></div>
+  </div>
+  <div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+  <div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly
+                                           style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;"> &lt;ion-view view-title="Posts"&gt; &lt;ion-nav-buttons side="secondary"&gt; &lt;button class="button button-icon icon ion-plus-round" ng-click="openPost()"&gt; &lt;/button&gt; &lt;/ion-nav-buttons&gt; &lt;ion-content &gt; &lt;div id="postlist"&gt; &lt;div class="list card" ng-repeat="post in posts"&gt; &lt;div class="item item-body"&gt; &lt;img ng-if="post.imageData" class="full-image" src="{{post.imageData}}"&gt; &lt;p&gt;{{post.message}} &lt;/p&gt; &lt;p&gt; &lt;a href="#" class="subdued"&gt;{{post.like}} Like&lt;/a&gt; &lt;/p&gt; &lt;/div&gt; &lt;div class="item tabs tabs-secondary tabs-icon-left"&gt; &lt;a ng-click="likePost($index)" class="tab-item" href="#"&gt; &lt;i class="icon ion-thumbsup"&gt;&lt;/i&gt; Like &lt;/a&gt; &lt;a class="tab-item" ng-click="share(post)" href="#"&gt; &lt;i class="icon ion-share"&gt;&lt;/i&gt; Share &lt;/a&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;br&gt; &lt;/ion-content&gt; &lt;/ion-view&gt; </textarea>
+  </div>
+  <div class="crayon-main" style="">
+    <table class="crayon-table">
+      <tr class="crayon-row">
+        <td class="crayon-nums " data-settings="hide">
+          <div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;">
+            <div class="crayon-num" data-line="crayon-5628f553723cd075217529-1">1</div>
+            <div class="crayon-num" data-line="crayon-5628f553723cd075217529-2">2</div>
+            <div class="crayon-num" data-line="crayon-5628f553723cd075217529-3">3</div>
+            <div class="crayon-num" data-line="crayon-5628f553723cd075217529-4">4</div>
+            <div class="crayon-num" data-line="crayon-5628f553723cd075217529-5">5</div>
+            <div class="crayon-num" data-line="crayon-5628f553723cd075217529-6">6</div>
+            <div class="crayon-num" data-line="crayon-5628f553723cd075217529-7">7</div>
+            <div class="crayon-num" data-line="crayon-5628f553723cd075217529-8">8</div>
+            <div class="crayon-num" data-line="crayon-5628f553723cd075217529-9">9</div>
+            <div class="crayon-num" data-line="crayon-5628f553723cd075217529-10">10</div>
+            <div class="crayon-num" data-line="crayon-5628f553723cd075217529-11">11</div>
+            <div class="crayon-num" data-line="crayon-5628f553723cd075217529-12">12</div>
+            <div class="crayon-num" data-line="crayon-5628f553723cd075217529-13">13</div>
+            <div class="crayon-num" data-line="crayon-5628f553723cd075217529-14">14</div>
+            <div class="crayon-num" data-line="crayon-5628f553723cd075217529-15">15</div>
+            <div class="crayon-num" data-line="crayon-5628f553723cd075217529-16">16</div>
+            <div class="crayon-num" data-line="crayon-5628f553723cd075217529-17">17</div>
+            <div class="crayon-num" data-line="crayon-5628f553723cd075217529-18">18</div>
+            <div class="crayon-num" data-line="crayon-5628f553723cd075217529-19">19</div>
+            <div class="crayon-num" data-line="crayon-5628f553723cd075217529-20">20</div>
+            <div class="crayon-num" data-line="crayon-5628f553723cd075217529-21">21</div>
+            <div class="crayon-num" data-line="crayon-5628f553723cd075217529-22">22</div>
+            <div class="crayon-num" data-line="crayon-5628f553723cd075217529-23">23</div>
+            <div class="crayon-num" data-line="crayon-5628f553723cd075217529-24">24</div>
+            <div class="crayon-num" data-line="crayon-5628f553723cd075217529-25">25</div>
+            <div class="crayon-num" data-line="crayon-5628f553723cd075217529-26">26</div>
+            <div class="crayon-num" data-line="crayon-5628f553723cd075217529-27">27</div>
+            <div class="crayon-num" data-line="crayon-5628f553723cd075217529-28">28</div>
+            <div class="crayon-num" data-line="crayon-5628f553723cd075217529-29">29</div>
+            <div class="crayon-num" data-line="crayon-5628f553723cd075217529-30">30</div>
+            <div class="crayon-num" data-line="crayon-5628f553723cd075217529-31">31</div>
+            <div class="crayon-num" data-line="crayon-5628f553723cd075217529-32">32</div>
+            <div class="crayon-num" data-line="crayon-5628f553723cd075217529-33">33</div>
+            <div class="crayon-num" data-line="crayon-5628f553723cd075217529-34">34</div>
+            <div class="crayon-num" data-line="crayon-5628f553723cd075217529-35">35</div>
+            <div class="crayon-num" data-line="crayon-5628f553723cd075217529-36">36</div>
+            <div class="crayon-num" data-line="crayon-5628f553723cd075217529-37">37</div>
+            <div class="crayon-num" data-line="crayon-5628f553723cd075217529-38">38</div>
+          </div>
+        </td>
+        <td class="crayon-code">
+          <div class="crayon-pre"
+               style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;">
+            <div class="crayon-line" id="crayon-5628f553723cd075217529-1">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f553723cd075217529-2">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f553723cd075217529-3"><span
+              class="crayon-r ">&lt;ion-view </span><span class="crayon-e ">view-title</span><span
+              class="crayon-o">=</span><span class="crayon-s ">"Posts"</span><span class="crayon-r ">&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723cd075217529-4"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;ion-nav-buttons </span><span class="crayon-e ">side</span><span
+              class="crayon-o">=</span><span class="crayon-s ">"secondary"</span><span class="crayon-r ">&gt;</span>
+            </div>
+            <div class="crayon-line" id="crayon-5628f553723cd075217529-5"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;button </span><span class="crayon-e ">class</span><span
+              class="crayon-o">=</span><span class="crayon-s ">"button button-icon icon ion-plus-round"</span><span
+              class="crayon-h"> </span><span class="crayon-e ">ng-click</span><span class="crayon-o">=</span><span
+              class="crayon-s ">"openPost()"</span><span class="crayon-r ">&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723cd075217529-6"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;/button&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723cd075217529-7"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;/ion-nav-buttons&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723cd075217529-8">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f553723cd075217529-9"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;ion-content &gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723cd075217529-10"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;div </span><span class="crayon-e ">id</span><span class="crayon-o">=</span><span
+              class="crayon-s ">"postlist"</span><span class="crayon-r ">&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723cd075217529-11"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;div </span><span class="crayon-e ">class</span><span class="crayon-o">=</span><span
+              class="crayon-s ">"list card"</span><span class="crayon-h"> </span><span
+              class="crayon-e ">ng-repeat</span><span class="crayon-o">=</span><span
+              class="crayon-s ">"post in posts"</span><span class="crayon-r ">&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723cd075217529-12">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f553723cd075217529-13"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;div </span><span class="crayon-e ">class</span><span class="crayon-o">=</span><span
+              class="crayon-s ">"item item-body"</span><span class="crayon-r ">&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723cd075217529-14"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;img </span><span class="crayon-e ">ng-if</span><span class="crayon-o">=</span><span
+              class="crayon-s ">"post.imageData"</span><span class="crayon-h"> </span><span
+              class="crayon-e ">class</span><span class="crayon-o">=</span><span
+              class="crayon-s ">"full-image"</span><span class="crayon-h"> </span><span
+              class="crayon-e ">src</span><span class="crayon-o">=</span><span
+              class="crayon-s ">"{{post.imageData}}"</span><span class="crayon-r ">&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723cd075217529-15"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;p&gt;</span><span class="crayon-i ">{{post.message}}</span></div>
+            <div class="crayon-line" id="crayon-5628f553723cd075217529-16"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;/p&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723cd075217529-17"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;p&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723cd075217529-18"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;a </span><span class="crayon-e ">href</span><span class="crayon-o">=</span><span
+              class="crayon-s ">"#"</span><span class="crayon-h"> </span><span class="crayon-e ">class</span><span
+              class="crayon-o">=</span><span class="crayon-s ">"subdued"</span><span class="crayon-r ">&gt;</span><span
+              class="crayon-i ">{{post.like}} Like</span><span class="crayon-r ">&lt;/a&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723cd075217529-19"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;/p&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723cd075217529-20"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;/div&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723cd075217529-21">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f553723cd075217529-22"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;div </span><span class="crayon-e ">class</span><span class="crayon-o">=</span><span
+              class="crayon-s ">"item tabs tabs-secondary tabs-icon-left"</span><span class="crayon-r ">&gt;</span>
+            </div>
+            <div class="crayon-line" id="crayon-5628f553723cd075217529-23"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;a&nbsp;&nbsp;</span><span class="crayon-e ">ng-click</span><span
+              class="crayon-o">=</span><span class="crayon-s ">"likePost($index)"</span><span
+              class="crayon-h"> </span><span class="crayon-e ">class</span><span class="crayon-o">=</span><span
+              class="crayon-s ">"tab-item"</span><span class="crayon-h"> </span><span class="crayon-e ">href</span><span
+              class="crayon-o">=</span><span class="crayon-s ">"#"</span><span class="crayon-r ">&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723cd075217529-24"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;i </span><span class="crayon-e ">class</span><span class="crayon-o">=</span><span
+              class="crayon-s ">"icon ion-thumbsup"</span><span class="crayon-r ">&gt;</span><span class="crayon-r ">&lt;/i&gt;</span>
+            </div>
+            <div class="crayon-line" id="crayon-5628f553723cd075217529-25"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Like</span>
+            </div>
+            <div class="crayon-line" id="crayon-5628f553723cd075217529-26"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;/a&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723cd075217529-27"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;a </span><span class="crayon-e ">class</span><span class="crayon-o">=</span><span
+              class="crayon-s ">"tab-item"</span><span class="crayon-h"> </span><span
+              class="crayon-e ">ng-click</span><span class="crayon-o">=</span><span
+              class="crayon-s ">"share(post)"</span><span class="crayon-h"> </span><span
+              class="crayon-e ">href</span><span class="crayon-o">=</span><span class="crayon-s ">"#"</span><span
+              class="crayon-r ">&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723cd075217529-28"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;i </span><span class="crayon-e ">class</span><span class="crayon-o">=</span><span
+              class="crayon-s ">"icon ion-share"</span><span class="crayon-r ">&gt;</span><span class="crayon-r ">&lt;/i&gt;</span>
+            </div>
+            <div class="crayon-line" id="crayon-5628f553723cd075217529-29"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Share</span>
+            </div>
+            <div class="crayon-line" id="crayon-5628f553723cd075217529-30"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;/a&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723cd075217529-31"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;/div&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723cd075217529-32"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;/div&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723cd075217529-33"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;/div&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723cd075217529-34"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;br&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723cd075217529-35"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-r ">&lt;/ion-content&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723cd075217529-36"><span
+              class="crayon-r ">&lt;/ion-view&gt;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723cd075217529-37">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f553723cd075217529-38">&nbsp;</div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div> <!-- [Format Time: 0.0034 seconds] --> <p>We added a list of <strong>posts</strong>. For each post in the list
+  the user have a like button and the message displayed. There is also the image that is hided with a ng-if directive
+  based on the presence of the imageData into the post record.</p> <p>Now if you test the application using two or more
+  browser windows you will see posted message and like given to a post coming in <strong>realtime</strong> on both
+  windows. The result is show below.</p> <p><a
+  href="https://www.codetutorial.io/wordpress/wp-content/uploads/2015/10/Schermata-2015-10-12-alle-23.21.17.png"><img
+  class="wp-image-813 size-medium aligncenter"
+  src="https://www.codetutorial.io/wordpress/wp-content/uploads/2015/10/Schermata-2015-10-12-alle-23.21.17-199x300.png"
+  alt="Schermata 2015-10-12 alle 23.21.17" width="199" height="300"/></a></p> <h2>Adding platform support</h2> <p>Ok now
+  we have a stream with posts where user can put a like but we miss the most important thing, the photos. Unfortunately
+  from now on all the test need to be made on the device simulator (you don&#8217;t need to restart it, it reload on
+  changes like it did the browser ) so if you didn&#8217;t already made it, you have to add the sdk and the platform to
+  the Meteor application.</p> <p><code>meteor install sdk ios</code></p> <p><code>meteor add-platform ios</code></p> <p>
+  <code>meteor run ios</code></p> <p>Once the <strong>simulator</strong> is started you can test the application using
+  one desktop browser and a the simulator to see how it work well also on it.</p> <h2>The camera</h2> <p>Like
+  anticipated at the beginning of the tutorial we will use a <strong>Cordova</strong> module to get control over the
+  cellphone native caemra function. The first thing to make is to install the plugin using the <strong>Meteor
+    CLI</strong>.</p> <p><code>meteor add cordova:cordova-plugin-camera@1.2.0</code></p> <p>Now the plugin is ready to
+  be used. We will put the code to use it in the <code>MainCtrl</code>. Add the code below in that file
+</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+<div id="crayon-5628f553723dc107826998"
+     class="crayon-syntax crayon-theme-obsidian crayon-font-monaco crayon-os-pc print-yes notranslate"
+     data-settings=" minimize scroll-mouseover"
+     style=" margin-top: 12px; margin-bottom: 12px; margin-left: -50px; margin-right: -50px; float: none; margin-left: auto; margin-right: auto; font-size: 12px !important; line-height: 15px !important;">
+  <div class="crayon-toolbar" data-settings=" mouseover overlay hide delay"
+       style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span
+    class="crayon-title">mainCtrl.js</span>
+
+    <div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;">
+      <div class="crayon-button crayon-nums-button" title="Toggle Line Numbers">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-plain-button" title="Toggle Plain Code">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-wrap-button" title="Toggle Line Wrap">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-expand-button" title="Expand Code">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-copy-button" title="Copy">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <div class="crayon-button crayon-popup-button" title="Open Code In New Window">
+        <div class="crayon-button-icon"></div>
+      </div>
+      <span class="crayon-language">JavaScript</span></div>
+  </div>
+  <div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+  <div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly
+                                           style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;"> $scope.getPhoto = function(){ var options = { quality: 50, destinationType: Camera.DestinationType.DATA_URL, sourceType: Camera.PictureSourceType.PHOTOLIBRARY, allowEdit: false, encodingType: Camera.EncodingType.JPEG, targetWidth: 500, targetHeight: 500, popoverOptions: CameraPopoverOptions, saveToPhotoAlbum: false, correctOrientation:true }; $cordovaCamera.getPicture(options).then(function(imageData) { var image = document.getElementById('myImage'); image.src = "data:image/jpeg;base64," + imageData; $scope.newPost.imageData=image.src; }, function(err) { // error }); }; </textarea>
+  </div>
+  <div class="crayon-main" style="">
+    <table class="crayon-table">
+      <tr class="crayon-row">
+        <td class="crayon-nums " data-settings="hide">
+          <div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;">
+            <div class="crayon-num" data-line="crayon-5628f553723dc107826998-1">1</div>
+            <div class="crayon-num" data-line="crayon-5628f553723dc107826998-2">2</div>
+            <div class="crayon-num" data-line="crayon-5628f553723dc107826998-3">3</div>
+            <div class="crayon-num" data-line="crayon-5628f553723dc107826998-4">4</div>
+            <div class="crayon-num" data-line="crayon-5628f553723dc107826998-5">5</div>
+            <div class="crayon-num" data-line="crayon-5628f553723dc107826998-6">6</div>
+            <div class="crayon-num" data-line="crayon-5628f553723dc107826998-7">7</div>
+            <div class="crayon-num" data-line="crayon-5628f553723dc107826998-8">8</div>
+            <div class="crayon-num" data-line="crayon-5628f553723dc107826998-9">9</div>
+            <div class="crayon-num" data-line="crayon-5628f553723dc107826998-10">10</div>
+            <div class="crayon-num" data-line="crayon-5628f553723dc107826998-11">11</div>
+            <div class="crayon-num" data-line="crayon-5628f553723dc107826998-12">12</div>
+            <div class="crayon-num" data-line="crayon-5628f553723dc107826998-13">13</div>
+            <div class="crayon-num" data-line="crayon-5628f553723dc107826998-14">14</div>
+            <div class="crayon-num" data-line="crayon-5628f553723dc107826998-15">15</div>
+            <div class="crayon-num" data-line="crayon-5628f553723dc107826998-16">16</div>
+            <div class="crayon-num" data-line="crayon-5628f553723dc107826998-17">17</div>
+            <div class="crayon-num" data-line="crayon-5628f553723dc107826998-18">18</div>
+            <div class="crayon-num" data-line="crayon-5628f553723dc107826998-19">19</div>
+            <div class="crayon-num" data-line="crayon-5628f553723dc107826998-20">20</div>
+            <div class="crayon-num" data-line="crayon-5628f553723dc107826998-21">21</div>
+            <div class="crayon-num" data-line="crayon-5628f553723dc107826998-22">22</div>
+            <div class="crayon-num" data-line="crayon-5628f553723dc107826998-23">23</div>
+            <div class="crayon-num" data-line="crayon-5628f553723dc107826998-24">24</div>
+            <div class="crayon-num" data-line="crayon-5628f553723dc107826998-25">25</div>
+            <div class="crayon-num" data-line="crayon-5628f553723dc107826998-26">26</div>
+            <div class="crayon-num" data-line="crayon-5628f553723dc107826998-27">27</div>
+            <div class="crayon-num" data-line="crayon-5628f553723dc107826998-28">28</div>
+            <div class="crayon-num" data-line="crayon-5628f553723dc107826998-29">29</div>
+          </div>
+        </td>
+        <td class="crayon-code">
+          <div class="crayon-pre"
+               style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;">
+            <div class="crayon-line" id="crayon-5628f553723dc107826998-1">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f553723dc107826998-2">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f553723dc107826998-3"><span class="crayon-sy">$</span><span
+              class="crayon-v">scope</span><span class="crayon-sy">.</span><span class="crayon-v">getPhoto</span><span
+              class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span
+              class="crayon-t">function</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span
+              class="crayon-sy">{</span></div>
+            <div class="crayon-line" id="crayon-5628f553723dc107826998-4">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f553723dc107826998-5"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-t">var</span><span class="crayon-h"> </span><span class="crayon-v">options</span><span
+              class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span
+              class="crayon-sy">{</span></div>
+            <div class="crayon-line" id="crayon-5628f553723dc107826998-6"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-v">quality</span><span class="crayon-o">:</span><span class="crayon-h"> </span><span
+              class="crayon-cn">50</span><span class="crayon-sy">,</span></div>
+            <div class="crayon-line" id="crayon-5628f553723dc107826998-7"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-v">destinationType</span><span class="crayon-o">:</span><span class="crayon-h"> </span><span
+              class="crayon-v">Camera</span><span class="crayon-sy">.</span><span
+              class="crayon-v">DestinationType</span><span class="crayon-sy">.</span><span
+              class="crayon-v">DATA_URL</span><span class="crayon-sy">,</span></div>
+            <div class="crayon-line" id="crayon-5628f553723dc107826998-8"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-v">sourceType</span><span class="crayon-o">:</span><span class="crayon-h"> </span><span
+              class="crayon-v">Camera</span><span class="crayon-sy">.</span><span
+              class="crayon-v">PictureSourceType</span><span class="crayon-sy">.</span><span class="crayon-v">PHOTOLIBRARY</span><span
+              class="crayon-sy">,</span></div>
+            <div class="crayon-line" id="crayon-5628f553723dc107826998-9"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-v">allowEdit</span><span class="crayon-o">:</span><span class="crayon-h"> </span><span
+              class="crayon-t">false</span><span class="crayon-sy">,</span></div>
+            <div class="crayon-line" id="crayon-5628f553723dc107826998-10"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-v">encodingType</span><span class="crayon-o">:</span><span class="crayon-h"> </span><span
+              class="crayon-v">Camera</span><span class="crayon-sy">.</span><span
+              class="crayon-v">EncodingType</span><span class="crayon-sy">.</span><span
+              class="crayon-v">JPEG</span><span class="crayon-sy">,</span></div>
+            <div class="crayon-line" id="crayon-5628f553723dc107826998-11"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-v">targetWidth</span><span class="crayon-o">:</span><span class="crayon-h"> </span><span
+              class="crayon-cn">500</span><span class="crayon-sy">,</span></div>
+            <div class="crayon-line" id="crayon-5628f553723dc107826998-12"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-v">targetHeight</span><span class="crayon-o">:</span><span class="crayon-h"> </span><span
+              class="crayon-cn">500</span><span class="crayon-sy">,</span></div>
+            <div class="crayon-line" id="crayon-5628f553723dc107826998-13"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-v">popoverOptions</span><span class="crayon-o">:</span><span class="crayon-h"> </span><span
+              class="crayon-v">CameraPopoverOptions</span><span class="crayon-sy">,</span></div>
+            <div class="crayon-line" id="crayon-5628f553723dc107826998-14"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-v">saveToPhotoAlbum</span><span class="crayon-o">:</span><span
+              class="crayon-h"> </span><span class="crayon-t">false</span><span class="crayon-sy">,</span></div>
+            <div class="crayon-line" id="crayon-5628f553723dc107826998-15"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-v">correctOrientation</span><span class="crayon-o">:</span><span
+              class="crayon-t">true</span></div>
+            <div class="crayon-line" id="crayon-5628f553723dc107826998-16"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-sy">}</span><span class="crayon-sy">;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723dc107826998-17">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f553723dc107826998-18"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-sy">$</span><span class="crayon-v">cordovaCamera</span><span class="crayon-sy">.</span><span
+              class="crayon-e">getPicture</span><span class="crayon-sy">(</span><span
+              class="crayon-v">options</span><span class="crayon-sy">)</span><span class="crayon-sy">.</span><span
+              class="crayon-st">then</span><span class="crayon-sy">(</span><span class="crayon-t">function</span><span
+              class="crayon-sy">(</span><span class="crayon-v">imageData</span><span class="crayon-sy">)</span><span
+              class="crayon-h"> </span><span class="crayon-sy">{</span></div>
+            <div class="crayon-line" id="crayon-5628f553723dc107826998-19"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-t">var</span><span class="crayon-h"> </span><span class="crayon-v">image</span><span
+              class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span
+              class="crayon-v">document</span><span class="crayon-sy">.</span><span
+              class="crayon-e">getElementById</span><span class="crayon-sy">(</span><span
+              class="crayon-s">'myImage'</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723dc107826998-20"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-v">image</span><span class="crayon-sy">.</span><span class="crayon-e ">src</span><span
+              class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span
+              class="crayon-s">"data:image/jpeg;base64,"</span><span class="crayon-h"> </span><span
+              class="crayon-o">+</span><span class="crayon-h"> </span><span class="crayon-v">imageData</span><span
+              class="crayon-sy">;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723dc107826998-21"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-sy">$</span><span class="crayon-v">scope</span><span class="crayon-sy">.</span><span
+              class="crayon-v">newPost</span><span class="crayon-sy">.</span><span
+              class="crayon-v">imageData</span><span class="crayon-o">=</span><span class="crayon-v">image</span><span
+              class="crayon-sy">.</span><span class="crayon-v">src</span><span class="crayon-sy">;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723dc107826998-22">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f553723dc107826998-23"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-sy">}</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span
+              class="crayon-t">function</span><span class="crayon-sy">(</span><span class="crayon-v">err</span><span
+              class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div>
+            <div class="crayon-line" id="crayon-5628f553723dc107826998-24"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-c">// error</span></div>
+            <div class="crayon-line" id="crayon-5628f553723dc107826998-25"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-sy">}</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723dc107826998-26">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f553723dc107826998-27"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+              class="crayon-sy">}</span><span class="crayon-sy">;</span></div>
+            <div class="crayon-line" id="crayon-5628f553723dc107826998-28">&nbsp;</div>
+            <div class="crayon-line" id="crayon-5628f553723dc107826998-29">&nbsp;</div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div> <!-- [Format Time: 0.0049 seconds] --> <p>If you run the application in the simulator now you will be able to
+  insert a picture into the post. For the testing purpose the camera <code>sourceType</code> is set to <code>Camera.PictureSourceType.PHOTOLIBRARY</code>
+  otherwise you will get an error. To get more option about the camera plugin you can refer the original site <a
+    href="http://ngcordova.com/docs/plugins/camera/">here</a>.</p> <h2><a
+  href="https://www.codetutorial.io/wordpress/wp-content/uploads/2015/10/Schermata-2015-10-13-alle-00.06.26.png"><img
+  class="wp-image-818 size-medium aligncenter"
+  src="https://www.codetutorial.io/wordpress/wp-content/uploads/2015/10/Schermata-2015-10-13-alle-00.06.26-162x300.png"
+  alt="Schermata 2015-10-13 alle 00.06.26" width="162" height="300"/></a></h2> <h2>Conclusion</h2> <p>This is just the
+  begin and the very basics on how to use this two, maybe three considering <strong>Cordova</strong>, framework
+  toghether. We got the incredible realtime feature of Meteor joined with the awesome mobile interface offered by Ionic
+  and we used just one of the hundreds plugins available in Cordova&#8230; can&#8217;t imagine what a developer can do
+  with more of them&#8230;</p> <p>As always all the code for the tutorial is hosted on <a
+  href="https://github.com/andbet39/IonicMeteorPost">GitHub</a>.</p>
+<div class='mailmunch-forms-after-post' style='display: none !important;'></div><span
+  class="et_social_bottom_trigger"></span>"
