@@ -26,7 +26,8 @@ angular.module('angularWpApp')
            rendered.find("#"+id).replaceWith('<div hljs>'+content+'</div>');
       });
 
-
+      rendered.find('div').removeClass();
+      rendered.find('img').removeClass().addClass('img-responsive center-block')
       $scope.content = rendered.html();
 
 
