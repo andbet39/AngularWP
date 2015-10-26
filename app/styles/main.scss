@@ -2,6 +2,7 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 // bower:scss
 // endbower
 
+
 body{
   font-family: Lora,'Times New Roman',serif;
   font-size: 20px;
@@ -118,4 +119,28 @@ h2 {
   opacity: 0;
   top: -50px;
   height: 0px;
+}
+
+
+article h2{
+  -webkit-font-feature-settings: 'dlig' 1, 'liga' 1, 'lnum' 1, 'kern' 1;
+  -moz-font-feature-settings: 'dlig' 1, 'liga' 1, 'lnum' 1, 'kern' 1;
+  -o-font-feature-settings: 'dlig' 1, 'liga' 1, 'lnum' 1, 'kern' 1;
+  line-height: 1.15em;
+  margin: 0 0 0.4em 0;
+  font-family: "Open Sans", sans-serif;
+  font-size: 2em;
+  text-rendering: geometricPrecision;
+  font-weight: 700;
+}
+
+article .img{
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  box-sizing: border-box;
 }

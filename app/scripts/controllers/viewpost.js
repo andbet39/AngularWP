@@ -8,7 +8,7 @@
  * Controller of the angularWpApp
  */
 angular.module('angularWpApp')
-  .controller('ViewpostCtrl', function ($scope,$http,$routeParams) {
+  .controller('ViewpostCtrl', function ($scope,$http,$routeParams,$sce  ) {
 
     $http.get('https://www.codetutorial.io/api/get_post/?post_id='+$routeParams.postId).then(function (response){
 
@@ -27,9 +27,11 @@ angular.module('angularWpApp')
       });
 
       rendered.find('div').removeClass();
-      rendered.find('img').removeClass().addClass('img-responsive center-block')
-      $scope.content = rendered.html();
 
+      rendered.find('img').removeClass().wrap( "<div class='article-image' layout='row' layout-align='center'></div>" );
+
+
+      $scope.content = rendered.html();
 
 
     }, function errorCallback(response) {
