@@ -10,7 +10,7 @@
 angular.module('angularWpApp')
   .controller('MainCtrl', function ($scope,$http) {
 
-        $http.get('https://www.codetutorial.io/api/get_posts/').then(function (response){
+        $http.get('https://www.codetutorial.io/api/get_posts/?count=9').then(function (response){
 
           $scope.posts = response.data.posts;
           console.log(response);
