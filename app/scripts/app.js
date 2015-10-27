@@ -11,7 +11,6 @@
 angular
   .module('angularWpApp', [
     'ngAnimate',
-    'ngMaterial',
     'ngCookies',
     'ngResource',
     'ngRoute',
@@ -25,17 +24,7 @@ angular
     // replace tab with 4 spaces
     tabReplace: '    '
   });
-}) .config(function($mdIconProvider) {
-    $mdIconProvider
-      .iconSet('communication', 'img/icons/sets/communication-icons.svg', 24)
-      .defaultIconSet('img/icons/sets/core-icons.svg', 24);
-  })
-  .config(function($mdIconProvider) {
-    $mdIconProvider
-      .iconSet('social', 'img/icons/sets/social-icons.svg', 24)
-      .defaultIconSet('img/icons/sets/core-icons.svg', 24);
-  })
-
+})
   .config(function ($routeProvider,$httpProvider) {
 
 
