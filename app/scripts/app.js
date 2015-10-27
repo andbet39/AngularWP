@@ -47,7 +47,12 @@ angular
         controller: 'ViewpostCtrl',
         controllerAs: 'viewpost'
       })
+      .when('/card', {
+        templateUrl: 'views/card.html',
+        controller: 'CardCtrl',
+        controllerAs: 'card'
+      })
       .otherwise({
-        redirectTo: '/'
+        redirectTo: '/card'
       });
   });

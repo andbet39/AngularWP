@@ -20,3 +20,14 @@ angular.module('angularWpApp')
           // or server returns response with an error status.
         });
   });
+
+$(function(){
+
+  $('#show').on('click',function(){
+    $('.card-reveal').slideToggle('slow');
+  });
+
+  $('.card-reveal .close').on('click',function(){
+    $('.card-reveal').slideToggle('slow');
+  });
+});

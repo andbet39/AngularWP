@@ -1,24 +1,21 @@
 <div class="row row-eq-height">
-<div class="col-md-4 postcard" ng-repeat="post in posts" ng-animate=" 'animate' ">
+<div class="col-md-4 " ng-repeat="post in posts">
 
-    <div class="panel panel-default">
-      <div class="panel-image">
-        <img src="http://lorempixel.com/400/200/sports/{{$index}}/" class="panel-image-preview" alt="image caption">
-      </div>
-      <div class="panel-body">
-        <div class="post-title">
-          <h2  >
-            <a  ng-href="/#/viewpost/{{post.id}}" ng-bind-html="post.title"></a>
-          </h2>
+
+    <article class="card">
+
+        <div class="card_thumb">
+            <img src="http://lorempicsum.com/futurama/400/225/{{$index+1}}" class="image-responsive"alt=""/>
         </div>
-    <!--   <div class="post-excerpt">
-          <p ng-bind-html="post.excerpt"></p>
-        </div>-->
-      </div>
- <!--   <div class="panel-footer text-center">
-        <a href="#facebook"><span class="fa fa-facebook"></span></a>
-        <a href="#twitter"><span class="fa fa-twitter"></span></a>
-      </div>-->
-    </div>
+
+        <div class="card_body">
+            <div class="card_title">
+                <div class="card_category">
+                    AngularJS
+                </div>
+                <a  ng-href="/#/viewpost/{{post.id}}" ng-bind-html="post.title"></a>
+            </div>
+        </div>
+    </article>
   </div>
 </div>
