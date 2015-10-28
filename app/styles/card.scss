@@ -26,7 +26,7 @@ body{
 
 .card_body{
   position: relative;
-  padding: 20px;
+  padding: 10px 20px 20px 20px;
 }
 
 .card_category{
@@ -39,7 +39,9 @@ body{
   background-color: #ff443c;
   top:-25px;
   left:0px;
+  opacity: 1;
   padding: 0px 10px 0px 10px;
+  border-radius: 0 5px 0 0;
   line-height: 25px;
     a{
       color: inherit;
@@ -67,7 +69,27 @@ body{
 
 }
 
-
 .card:hover .card_thumb img{
   opacity: 0.5;
+}
+
+.card_title{
+  font-family: "Open Sans";
+  font-size: 1.5em;
+  font-weight: bold;
+  opacity: 0.8;
+  text-transform: uppercase;
+  transition: opacity $duration;
+  h2 {
+    padding-top: 0px;
+  }
+
+  a{
+    color: inherit;
+    text-decoration: none;
+  }
+
+}
+.card:hover .card_title {
+  opacity: 1;
 }
