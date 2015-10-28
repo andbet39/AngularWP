@@ -28,7 +28,7 @@ angular.module('angularWpApp')
 
       rendered.find('div').removeClass();
 
-      rendered.find('img').removeClass().wrap( "<div class='article-image' layout='row' layout-align='center'></div>" );
+      rendered.find('img').removeClass().addClass('img-responsive center-block').wrap( "<div class='article-image' layout='row' layout-align='center'></div>" );
 
 
       $scope.content = rendered.html();
