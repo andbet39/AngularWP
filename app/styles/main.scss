@@ -56,27 +56,6 @@ body{
 }
 
 
-code{
-  font-size: 15px ;
-}
-p {
-  line-height: 1.5;
-  margin-top: 10px;
-
-}
-
-h2 {
-  display: block;
-  font-size: 1.2em;
-  -webkit-margin-before: 0.83em;
-  -webkit-margin-after: 0.83em;
-  -webkit-margin-start: 0px;
-  -webkit-margin-end: 0px;
-  font-weight: bold;
-}
-
-
-
 .row-eq-height, .row-eq-height > div[class*='col-'] {
   display: -webkit-flex;
   display: flex;
@@ -88,55 +67,6 @@ h2 {
 }
 
 
-.post-title h2{
-  -webkit-font-feature-settings: 'dlig' 1, 'liga' 1, 'lnum' 1, 'kern' 1;
-  -moz-font-feature-settings: 'dlig' 1, 'liga' 1, 'lnum' 1, 'kern' 1;
-  -o-font-feature-settings: 'dlig' 1, 'liga' 1, 'lnum' 1, 'kern' 1;
-  line-height: 1.15em;
-  margin: 0 0 0.4em 0;
-  font-family: "Open Sans", sans-serif;
-  text-rendering: geometricPrecision;
-  font-weight: 700;
-}
-
-.post-title  a {
-  color: #2E2E2E;
-  text-decoration: none;
-  transition: color 0.3s ease;
-
-}
-.post-title a:hover {
-  color: #4A4A4A;
-}
-
-
-.post-excerpt
-{
-  font-size: 0.8em;
-}
-
-.panel-image img.panel-image-preview {
-  width: 100%;
-  border-radius: 4px 4px 0px 0px;
-}
-
-.panel-heading ~ .panel-image img.panel-image-preview {
-  border-radius: 0px;
-}
-
-.panel-image ~ .panel-body, .panel-image.hide-panel-body ~ .panel-body {
-  overflow: hidden;
-}
-.panel-image ~ .panel-footer a {
-  padding: 0px 10px;
-  font-size: 1.3em;
-  color: rgb(100, 100, 100);
-}
-
-.panel-image.hide-panel-body ~ .panel-body {
-  height: 0px;
-  padding: 0px;
-}
 
 .categorylist {
   bottom: 100%;
@@ -146,8 +76,8 @@ h2 {
   overflow: hidden;
   z-index: -10;
   background-color: #363636;
-
 }
+
 
 .categoryrow{
   display: -webkit-flex;

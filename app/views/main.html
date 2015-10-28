@@ -1,21 +1,41 @@
-<div class="row row-eq-height">
-<div class="col-md-4 " ng-repeat="post in posts">
+<div infinite-scroll="loadMore()" infinite-scroll-distance="0" class="row row-eq-height">
+
+<div class="col-md-4 col-sm-12" ng-repeat="post in posts">
 
 
     <article class="card">
 
         <div class="card_thumb">
-            <img src="http://lorempicsum.com/futurama/400/225/{{$index+1}}" class="image-responsive"alt=""/>
+          <div class="card_favorite">
+            <i class="fa fa-heart-o"></i> Favorite
+          </div>
+          <img src="http://lorempixel.com/400/200/sports/{{$index}}/" class="img-responsive" alt=""/>
+
         </div>
 
         <div class="card_body">
+
             <div class="card_title">
-                <div class="card_category">
-                    AngularJS
+              <div class="card_list_category">
+                <div  ng-repeat="categ in post.categories | filter:{ title: '!Tutorial' } | limitTo:3" class="card_category {{categ.slug}}" ng-class="{'last':$last}" >
+                  {{categ.title}}
                 </div>
+              </div>
+
                 <h2><a  ng-href="/#/viewpost/{{post.id}}" ng-bind-html="post.title"></a></h2>
             </div>
         </div>
+
+        <div class="card_footer">
+          <div class="foot-comment"><i class="fa fa-comments"></i> {{post.comment_count}} Comments</div>
+          <div class="foot-time"><i class="fa fa-clock-o"></i> 6 min</div>
+        </div>
     </article>
+  </div>
+</div>
+
+<div class="row">
+  <div ng-if="busy" class="col-md-12 center-block" style="display: block">
+      <img src="images/ajax-loader.gif">
   </div>
 </div>

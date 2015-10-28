@@ -17,6 +17,7 @@ angular
     'ngSanitize',
     'ngTouch',
     'angular-bind-html-compile',
+    'infinite-scroll',
     'hljs'
   ])
 .config(function (hljsServiceProvider) {

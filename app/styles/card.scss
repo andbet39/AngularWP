@@ -7,55 +7,106 @@ body{
  // background-color: #0b97c4;
 }
 
+.card_container{
+  overflow: hidden;
+}
 .card{
   //position: absolute;
   overflow: hidden;
  // top:50%;
- // left:50%;
-  //transform: translateX(-50%) translateY(50%);
-  margin-bottom: 20px;
-  border-radius: 10px;
-  background-color: #ffffff;
-  box-shadow: 0px 0px 20px rgba(0,0,0,0.1);
-  transition: box-shadow $duration;
+  font-family: "Open Sans";
+  margin-bottom: 30px;
+  background-color: #f6f6f6;
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+  transition: box-shadow $duration , background-color $duration;
 }
 
 .card:hover{
-  box-shadow: 0px 0px 50px rgba(0,0,0,0.3);
+  background-color: white;
+  box-shadow: 0px 0px 35px rgba(0,0,0,0.5);
 }
 
 .card_body{
   position: relative;
   padding: 10px 20px 20px 20px;
+  margin-bottom: 30px;
 }
 
-.card_category{
+.card_list_category{
   position: absolute;
+  top:-25px;
+  left:0px;
+  height: 25px;
   font-family: "Open Sans";
   font-size: 14px;
   font-weight: bold;
   color:white;
+  padding: 0;
+  margin: 0;
+
+}
+
+
+.card_category{
+  display: inline;
   height: 25px;
-  background-color: #ff443c;
-  top:-25px;
-  left:0px;
-  opacity: 1;
-  padding: 0px 10px 0px 10px;
-  border-radius: 0 5px 0 0;
   line-height: 25px;
-    a{
-      color: inherit;
-      text-decoration: none;
-    }
+  padding: 3px 10px 3px 10px;
+  opacity: 0.8;
+  transition: opacity $duration;
+  a{
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+.card:hover .card_category{
+  opacity: 1.0;
+}
+.angularjs
+{
+  background-color: red;
+}
+
+.mean-stack
+{
+  background-color: greenyellow;
+}
+
+.meteor
+{
+  background-color: #e02904;
+}
+.ionic
+{
+  background-color: #61bbff;
+}
+.laravel-5{
+  background-color:#F4655F;
+}
+
+.laravel{
+  background-color: #F4655F;
+}
+
+.projects{
+  background-color: #fffd96;
+}
+
+.last{
+  -webkit-border-radius: 0 5px 0 0;
+  -moz-border-radius: 0 5px 0 0;
+  border-radius: 0 5px 0 0;
 }
 
 .card_thumb{
-
+  position: relative;
+  width: 100%;
   background-color: black;
-  height: 225px;
+  height: 150px;
   overflow: hidden;
-
   img{
+    //border-radius: 10px 10px 0 0;
     display: block;
     opacity: 1;
     transform: none;
@@ -66,8 +117,28 @@ body{
     opacity: 0.6;
     transform: scale(1.2);
   }
-
 }
+.card_favorite{
+  position: absolute;
+  bottom:100%;
+  width: 100%;
+  background-color: black;
+  line-height: 35px;
+  transition: transform $duration;
+   z-index: 1;
+  color:white;
+  text-align: center;
+  opacity: 0.7;
+  a{
+    color:inherit;
+    text-decoration: none;
+  }
+}
+
+.card:hover .card_favorite {
+   transform: translate3d(0,35px,0);
+}
+
 
 .card:hover .card_thumb img{
   opacity: 0.5;
@@ -75,13 +146,15 @@ body{
 
 .card_title{
   font-family: "Open Sans";
-  font-size: 1.5em;
-  font-weight: bold;
-  opacity: 0.8;
-  text-transform: uppercase;
-  transition: opacity $duration;
   h2 {
     padding-top: 0px;
+    font-weight: bold;
+    font-size: 20px;
+    text-align: center;
+
+    margin:0px;
+    opacity: 0.8;
+    transition: opacity $duration;
   }
 
   a{
@@ -90,6 +163,27 @@ body{
   }
 
 }
-.card:hover .card_title {
+.card:hover .card_title h2 {
   opacity: 1;
+}
+
+
+.card_footer{
+    position: absolute;
+    bottom: 0;
+    font-size: 14px;
+    line-height: 25px;
+    color: #9a9a9a;
+    display: inline;
+    padding-left: 20px;
+    padding-bottom: 30px;
+}
+
+.foot-comment{
+  display: inline;
+}
+
+.foot-time{
+  display: inline;
+  padding-left:30px
 }
