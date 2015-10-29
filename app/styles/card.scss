@@ -70,7 +70,7 @@ $duration :0.3s;
 
 .mean-stack
 {
-  background-color: greenyellow;
+  background-color: #7ed321;
 }
 
 .meteor
@@ -90,7 +90,13 @@ $duration :0.3s;
 }
 
 .projects{
-  background-color: #fffd96;
+  background-color: #ff9218;
+}
+.lounge{
+  background-color: #ff61f7;
+}
+.tutorial{
+  background-color: #b61fff;
 }
 
 .last{
@@ -103,7 +109,7 @@ $duration :0.3s;
   position: relative;
   width: 100%;
   background-color: black;
-  height: 150px;
+  height: 125px;
   overflow: hidden;
   img{
     //border-radius: 10px 10px 0 0;

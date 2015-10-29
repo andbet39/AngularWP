@@ -88,11 +88,19 @@ body{
   -webkit-justify-content: center; /* Safari */
   justify-content:         space-around;
   color: white;
+  font-family: "Open Sans";
+  font-size:20px;
+  height: 50px;
     a{
       text-decoration: none;
       color: inherit;
+      margin: 15px;
+      line-height: 20px;
     }
 
+}
+.category-link{
+  border-radius: 10px;
 }
 
 #sitecontainer{
@@ -130,4 +138,5 @@ p{
 .article-image{
   margin:30px;
 }
+
 
