@@ -11,7 +11,7 @@ angular.module('angularWpApp')
   .controller('MainCtrl', function ($scope,$http,$routeParams ) {
 
         $scope.page=0;
-         var count='6';
+         var count='9';
         $scope.busy=true;
         var method ='';
 
