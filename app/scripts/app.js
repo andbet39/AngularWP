@@ -49,6 +49,6 @@ angular
         controllerAs: 'viewpost'
       })
       .otherwise({
-        redirectTo: '/main'
+        redirectTo: '/main/all'
       });
   });
