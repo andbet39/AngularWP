@@ -1,19 +1,16 @@
-
-$duration :0.5s;
+$duration :0.3s;
 
 *{box-sizing: border-box}
-
-body{
- // background-color: #0b97c4;
-}
 
 .card_container{
   overflow: hidden;
 }
+
 .card{
   //position: absolute;
   overflow: hidden;
   min-width: 300px;
+  width: 330px;
  // top:50%;
   font-family: "Open Sans";
   margin-bottom: 30px;

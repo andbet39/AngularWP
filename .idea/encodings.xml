@@ -3,11 +3,14 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/app/scripts/app.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/scripts/controllers/main.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/scripts/controllers/navbar.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/scripts/controllers/viewpost.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/scripts/services/wp.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/styles/_navbar.sass" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/styles/card.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/styles/main.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/views/main.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/views/navbar.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/views/viewpost.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/bower.json" charset="UTF-8" />
   </component>

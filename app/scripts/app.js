@@ -33,10 +33,10 @@ angular
     $httpProvider.defaults.cache = false;
 
     $routeProvider
-      .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl',
-        controllerAs: 'main'
+      .when('/main/:category', {
+            templateUrl: 'views/main.html',
+            controller: 'MainCtrl',
+            controllerAs: 'main'
       })
       .when('/about', {
         templateUrl: 'views/about.html',
@@ -48,12 +48,7 @@ angular
         controller: 'ViewpostCtrl',
         controllerAs: 'viewpost'
       })
-      .when('/card', {
-        templateUrl: 'views/card.html',
-        controller: 'CardCtrl',
-        controllerAs: 'card'
-      })
       .otherwise({
-        redirectTo: '/card'
+        redirectTo: '/main'
       });
   });

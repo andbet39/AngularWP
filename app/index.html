@@ -19,47 +19,46 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/highlight.min.js"></script>
   </head>
   <body ng-app="angularWpApp">
-      <nav class="navbar navbar-default navbar-static-top navbar-border">
-        <div class="container">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" rel="home" href="#/" >
-              <img style="max-height:60px; margin-top:5px"
-                   src="https://www.codetutorial.io/wordpress/wp-content/uploads/2015/07/logoCodenew.png">
-            </a>
-          </div>
-          <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-              <li id="catlistbutton">
-                <a href="" role="button">Categories <span class="caret"></span></a>
-              </li>
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div>
-      </nav>
-        <div id="sitecontainer">
 
-           <div class="categorylist">
+        <nav class="navbar navbar-default navbar-static-top navbar-border">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" rel="home" href="#/main/all" >
+                <img style="max-height:60px; margin-top:5px"
+                     src="https://www.codetutorial.io/wordpress/wp-content/uploads/2015/07/logoCodenew.png">
+              </a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+                <li id="catlistbutton">
+                  <a href="" role="button">Categories <span class="caret"></span></a>
+                </li>
+              </ul>
+            </div><!--/.nav-collapse -->
+          </div>
+        </nav>
+
+        <div id="sitecontainer">
+          <div class="categorylist" ng-controller="NavbarCtrl">
              <div class="row categoryrow">
 
-               <div > <img src="http://lorempixel.com/200/100/people/1/"  alt="image caption"></div>
-               <div > <img src="http://lorempixel.com/200/100/people/2/"  alt="image caption"></div>
-               <div > <img src="http://lorempixel.com/200/100/people/3/"  alt="image caption"></div>
-               <div > <img src="http://lorempixel.com/200/100/people/4/"  alt="image caption"></div>
-               <div > <img src="http://lorempixel.com/200/100/people/5/"  alt="image caption"></div>
-               <div > <img src="http://lorempixel.com/200/100/people/6/"  alt="image caption"></div>
+             <div ng-repeat="category in categories |  filter:{ slug: '!tutorial-it' }|  filter:{ slug: '!laravel' }" ng-click="setCategory(category.slug)">
+                   <a ng-href="#/main/{{category.slug}}" >{{category.title}}</a>
+                </div>
              </div>
           </div>
 
-        <div class="container content">
-              <ng-view>
 
-              </ng-view>
+        <div class="container content">
+              <div ng-view="content">
+
+              </div>
           </div>
         </div>
 
@@ -99,7 +98,8 @@
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/about.js"></script>
         <script src="scripts/controllers/viewpost.js"></script>
-        <script src="scripts/controllers/card.js"></script>
+        <script src="scripts/controllers/navbar.js"></script>
+        <script src="scripts/services/wp.js"></script>
         <!-- endbuild -->
 
 
@@ -118,7 +118,7 @@
           });
         });
 
-      $('#categorylist').mouseover(function () {
+      $('.categorylist').mouseover(function () {
         var height = $('.categoryrow').height();
         $('#sitecontainer').css({
           transform: "translate3d(0, " + height + "px, 0)"

@@ -8,44 +8,60 @@
  * Controller of the angularWpApp
  */
 angular.module('angularWpApp')
-  .controller('MainCtrl', function ($scope,$http) {
+  .controller('MainCtrl', function ($scope,$http,$routeParams ) {
 
         $scope.page=0;
+         var count='6';
         $scope.busy=true;
+        var method ='';
 
-        $http.get('https://www.codetutorial.io/api/get_posts/?count=9&page='+$scope.page).then(function (response){
+        $scope.init= function(){
+          var category=$routeParams.category;
+          var apiurl='';
+            if(category!='all'){
+               apiurl='https://www.codetutorial.io/api/get_category_posts/?slug='+category+'&count='+count+'&page='+$scope.page.toString();;
+            }else{
+               apiurl='https://www.codetutorial.io/api/get_posts/?count='+count+'&page='+$scope.page.toString();
+            }
 
-          $scope.posts = response.data.posts;
-          console.log(response);
-          $scope.maxpages=response.data.pages;
-          $scope.busy=false;
+            $http.get(apiurl).then(function (response){
 
+              $scope.posts = response.data.posts;
+              $scope.maxpages=response.data.pages;
+              $scope.busy=false;
 
-        }, function errorCallback(response) {
-          // called asynchronously if an error occurs
-          // or server returns response with an error status.
-        });
+            });
+          };
 
+        $scope.init();
 
      $scope.loadMore = function () {
-           if($scope.page < $scope.maxpages){
+
+       if(!$scope.busy){
+       var category=$routeParams.category;
+       var apiurl='';
+
+
+        if($scope.page < $scope.maxpages){
              $scope.page +=1;
              $scope.busy=true;
 
+              if(category!='all'){
+                apiurl='https://www.codetutorial.io/api/get_category_posts/?slug='+category+'&count='+count+'&page='+$scope.page;
+              }else{
+                apiurl='https://www.codetutorial.io/api/get_posts/?count='+count+'&page='+$scope.page
+              }
 
-             $http.get('https://www.codetutorial.io/api/get_posts/?count=9&page='+$scope.page).then(function (response){
-
-             $scope.maxpages=response.data.pages;
+             $http.get(apiurl).then(function (response){
+              $scope.maxpages=response.data.pages;
              angular.forEach(response.data.posts,function(item) {
                $scope.posts.push(item);
-
              });
                $scope.busy=false;
 
-           }, function errorCallback(response) {
-
            });
         }
+       }
      }
   });
 
