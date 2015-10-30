@@ -7,16 +7,22 @@
  * # MainCtrl
  * Controller of the angularWpApp
  */
+var adSenseTpl = '<ins class="ad-div adsbygoogle" style="display:inline-block;width:336px;height:280px" data-ad-client="ca-pub-7296294573929906" data-ad-slot="9951268670"></ins></ins>';
+
+
+
 angular.module('angularWpApp')
   .controller('MainCtrl', function ($scope,$http,$routeParams ) {
 
         $scope.page=0;
-         var count='9';
+        var count='10';
         $scope.busy=true;
         var method ='';
+        var insertAds=true;
 
         $scope.init= function(){
           var category=$routeParams.category;
+
           var apiurl='';
             if(category!='all'){
                apiurl='https://www.codetutorial.io/api/get_category_posts/?slug='+category+'&count='+count+'&page='+$scope.page.toString();;
@@ -29,6 +35,11 @@ angular.module('angularWpApp')
               $scope.posts = response.data.posts;
               $scope.maxpages=response.data.pages;
               $scope.busy=false;
+
+              if(insertAds){
+                $scope.posts.splice( Math.floor((Math.random() * count) + 1),0,{type:100});
+                $scope.posts.splice( Math.floor((Math.random() * count) + 1),0,{type:100});
+              }
 
             });
           };
@@ -55,7 +66,8 @@ angular.module('angularWpApp')
              $http.get(apiurl).then(function (response){
               $scope.maxpages=response.data.pages;
              angular.forEach(response.data.posts,function(item) {
-               $scope.posts.push(item);
+
+                 $scope.posts.push(item);
              });
                $scope.busy=false;
 
@@ -63,5 +75,20 @@ angular.module('angularWpApp')
         }
        }
      }
+  })
+  .directive('googleAdsense', function($window, $compile) {
+    return {
+      restrict: 'A',
+      transclude: true,
+      template: adSenseTpl,
+      replace: false,
+      link: function postLink(scope, element, iAttrs) {
+        element.html("");
+        element.append(angular.element($compile(adSenseTpl)(scope)));
+        if (!$window.adsbygoogle) {
+          $window.adsbygoogle = [];
+        }
+        $window.adsbygoogle.push({});
+      }
+    };
   });
-
