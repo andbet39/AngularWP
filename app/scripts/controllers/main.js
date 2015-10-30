@@ -9,7 +9,7 @@
  */
 var adSenseTpl = '<ins class="ad-div adsbygoogle" style="display:inline-block;width:336px;height:280px" data-ad-client="ca-pub-7296294573929906" data-ad-slot="9951268670"></ins></ins>';
 
-
+var API_URL = 'http://angular.codetutorial.io:3000'
 
 angular.module('angularWpApp')
   .controller('MainCtrl', function ($scope,$http,$routeParams ) {
@@ -25,9 +25,9 @@ angular.module('angularWpApp')
 
           var apiurl='';
             if(category!='all'){
-               apiurl='https://www.codetutorial.io/api/get_category_posts/?slug='+category+'&count='+count+'&page='+$scope.page.toString();;
+               apiurl=API_URL+'/api/get_category_posts/?slug='+category+'&count='+count+'&page='+$scope.page.toString();;
             }else{
-               apiurl='https://www.codetutorial.io/api/get_posts/?count='+count+'&page='+$scope.page.toString();
+               apiurl=API_URL+'/api/get_posts/?count='+count+'&page='+$scope.page.toString();
             }
 
             $http.get(apiurl).then(function (response){
@@ -58,9 +58,9 @@ angular.module('angularWpApp')
              $scope.busy=true;
 
               if(category!='all'){
-                apiurl='https://www.codetutorial.io/api/get_category_posts/?slug='+category+'&count='+count+'&page='+$scope.page;
+                apiurl=API_URL+'/api/get_category_posts/?slug='+category+'&count='+count+'&page='+$scope.page;
               }else{
-                apiurl='https://www.codetutorial.io/api/get_posts/?count='+count+'&page='+$scope.page
+                apiurl=API_URL+'/api/get_posts/?count='+count+'&page='+$scope.page
               }
 
              $http.get(apiurl).then(function (response){

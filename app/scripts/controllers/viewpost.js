@@ -7,10 +7,14 @@
  * # ViewpostCtrl
  * Controller of the angularWpApp
  */
+
+
+var API_URL = 'http://angular.codetutorial.io:3000'
+
 angular.module('angularWpApp')
   .controller('ViewpostCtrl', function ($scope,$http,$routeParams,$sce  ) {
 
-    $http.get('https://www.codetutorial.io/api/get_post/?post_id='+$routeParams.postId).then(function (response){
+    $http.get(API_URL+'/api/get_post/?post_id='+$routeParams.postId).then(function (response){
 
       $scope.title =response.data.post.title;
       var rendered = angular.element('<div></div>');
