@@ -8,9 +8,9 @@
  * Controller of the angularWpApp
  */
 angular.module('angularWpApp')
-  .controller('NavbarCtrl', function ($scope,$http,wp) {
+  .controller('NavbarCtrl', function ($scope,wp) {
 
-    wp.getCategory().then(function (response){
+    wp.getCategories().then(function (response){
       $scope.categories=response.data.categories;
     });
 

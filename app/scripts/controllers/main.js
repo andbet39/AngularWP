@@ -12,25 +12,18 @@ var adSenseTpl = '<ins class="ad-div adsbygoogle" style="display:inline-block;wi
 var API_URL = 'http://angular.codetutorial.io:3000'
 
 angular.module('angularWpApp')
-  .controller('MainCtrl', function ($scope,$http,$routeParams ) {
+  .controller('MainCtrl', function ($scope,$routeParams,wp ) {
 
         $scope.page=0;
-        var count='10';
         $scope.busy=true;
-        var method ='';
+
+        var count='10';
         var insertAds=true;
 
         $scope.init= function(){
           var category=$routeParams.category;
 
-          var apiurl='';
-            if(category!='all'){
-               apiurl=API_URL+'/api/get_category_posts/?slug='+category+'&count='+count+'&page='+$scope.page.toString();;
-            }else{
-               apiurl=API_URL+'/api/get_posts/?count='+count+'&page='+$scope.page.toString();
-            }
-
-            $http.get(apiurl).then(function (response){
+            wp.getPosts(count,$scope.page,category).then(function (response){
 
               $scope.posts = response.data.posts;
               $scope.maxpages=response.data.pages;
@@ -49,23 +42,12 @@ angular.module('angularWpApp')
      $scope.loadMore = function () {
 
        if(!$scope.busy){
-       var category=$routeParams.category;
-       var apiurl='';
-
+           var category=$routeParams.category;
 
         if($scope.page < $scope.maxpages){
-             $scope.page +=1;
-             $scope.busy=true;
-
-              if(category!='all'){
-                apiurl=API_URL+'/api/get_category_posts/?slug='+category+'&count='+count+'&page='+$scope.page;
-              }else{
-                apiurl=API_URL+'/api/get_posts/?count='+count+'&page='+$scope.page
-              }
-
-             $http.get(apiurl).then(function (response){
-              $scope.maxpages=response.data.pages;
-             angular.forEach(response.data.posts,function(item) {
+            wp.getPosts(count,$scope.page,category).then(function (response){
+                $scope.maxpages=response.data.pages;
+                angular.forEach(response.data.posts,function(item) {
 
                  $scope.posts.push(item);
              });
@@ -76,6 +58,7 @@ angular.module('angularWpApp')
        }
      }
   })
+
   .directive('googleAdsense', function($window, $compile) {
     return {
       restrict: 'A',
