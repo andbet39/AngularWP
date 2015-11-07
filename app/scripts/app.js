@@ -34,6 +34,11 @@ angular
     $httpProvider.defaults.cache = false;
 
     $routeProvider
+      .when('/', {
+        templateUrl: 'views/main.html',
+        controller: 'MainCtrl',
+        controllerAs: 'main'
+      })
       .when('/:category', {
             templateUrl: 'views/main.html',
             controller: 'MainCtrl',

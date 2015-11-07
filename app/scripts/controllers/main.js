@@ -20,8 +20,11 @@ angular.module('angularWpApp')
         var insertAds=true;
 
         $scope.init= function(){
-          var category=$routeParams.category;
+          var category='all';
 
+          if($routeParams.category){
+            category=$routeParams.category;
+          }
             wp.getPosts(count,$scope.page,category).then(function (response){
 
               $scope.posts = response.data.posts;
