@@ -60,7 +60,7 @@ angular
 
 
     $locationProvider.hashPrefix('!');
-    $locationProvider.html5Mode(true);
+   //$locationProvider.html5Mode(true);
 
 
     $httpProvider.interceptors.push(function($q,$injector) {
