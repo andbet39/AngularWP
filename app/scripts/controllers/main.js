@@ -36,7 +36,6 @@ angular.module('angularWpApp')
                 $scope.posts.splice( Math.floor((Math.random() * count) + 1),0,{type:100});
               }
 
-              $scope.htmlReady();
             });
           };
 
@@ -55,7 +54,6 @@ angular.module('angularWpApp')
                  $scope.posts.push(item);
              });
                $scope.busy=false;
-               $scope.htmlReady();
 
            });
         }

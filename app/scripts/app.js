@@ -16,7 +16,6 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
-    'angular-bind-html-compile',
     'infinite-scroll',
     'hljs',
     'seo'
@@ -27,11 +26,7 @@ angular
     tabReplace: '    '
   });
 })
-  .config(function ($routeProvider,$httpProvider) {
-
-
-  $httpProvider.defaults.useXDomain = true;
-    $httpProvider.defaults.cache = false;
+  .config(function ($routeProvider,$httpProvider,$locationProvider) {
 
     $routeProvider
       .when('/', {
@@ -62,4 +57,34 @@ angular
       .otherwise({
         redirectTo: '/all'
       });
+
+
+    $locationProvider.hashPrefix('!');
+
+
+    $httpProvider.interceptors.push(function($q,$injector) {
+      return {
+
+        'response': function(response) {
+          console.log("interceptor");
+
+          var $http = $http || $injector.get('$http');
+          var $timeout = $injector.get('$timeout');
+          var $rootScope = $injector.get('$rootScope');
+
+          if($http.pendingRequests.length < 1) {
+            $timeout(function(){
+              if($http.pendingRequests.length < 1){
+                console.log('HTML READY called');
+                $rootScope.htmlReady();
+              }
+            }, 1000);//an 0.7 seconds safety interval, if there are no requests for 0.7 seconds, it means that the app is through rendering
+          }
+          return response;
+        }
+
+      };
+    });
+
   });
+
