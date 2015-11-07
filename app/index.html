@@ -54,7 +54,7 @@
           <div class="categorylist" ng-controller="NavbarCtrl">
              <div class="row categoryrow">
              <div  ng-repeat="category in categories |  filter:{ slug: '!tutorial-it' }|  filter:{ slug: '!laravel' }" class="category-link" ng-class="category.slug">
-                   <a ng-href="/{{category.slug}}">{{category.title}}</a>
+                   <a ng-href="/#/{{category.slug}}">{{category.title}}</a>
              </div>
              </div>
           </div>
