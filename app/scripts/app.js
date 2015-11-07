@@ -34,7 +34,7 @@ angular
     $httpProvider.defaults.cache = false;
 
     $routeProvider
-      .when('/main/:category', {
+      .when('/:category', {
             templateUrl: 'views/main.html',
             controller: 'MainCtrl',
             controllerAs: 'main'
@@ -55,6 +55,6 @@ angular
         controllerAs: 'mainpage'
       })
       .otherwise({
-        redirectTo: '/main/all'
+        redirectTo: '/all'
       });
   });
