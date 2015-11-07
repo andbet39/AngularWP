@@ -16,7 +16,6 @@ angular.module('angularWpApp')
 
         $scope.page=0;
         $scope.busy=true;
-
         var count='10';
         var insertAds=true;
 
@@ -34,6 +33,7 @@ angular.module('angularWpApp')
                 $scope.posts.splice( Math.floor((Math.random() * count) + 1),0,{type:100});
               }
 
+              $scope.htmlReady();
             });
           };
 
@@ -52,6 +52,7 @@ angular.module('angularWpApp')
                  $scope.posts.push(item);
              });
                $scope.busy=false;
+               $scope.htmlReady();
 
            });
         }

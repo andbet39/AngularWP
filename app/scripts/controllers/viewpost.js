@@ -33,5 +33,7 @@ angular.module('angularWpApp')
 
       $scope.content = rendered.html();
 
+      $scope.htmlReady();
+
     });
   });

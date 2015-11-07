@@ -19,16 +19,14 @@ angular.module('angularWpApp')
 
         var apiurl='';
         if(category!='all'){
-          apiurl=API_URL+'/api/get_category_posts/?slug='+category+'&count='+count+'&page='+page.toString();;
+          apiurl=API_URL+'/api/get_category_posts/?slug='+category+'&count='+count+'&page='+page.toString();
         }else{
           apiurl=API_URL+'/api/get_posts/?count='+count+'&page='+page.toString();
         }
 
         return $http.get(apiurl);
 
-
       };
-
 
     return wp;
 

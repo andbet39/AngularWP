@@ -18,7 +18,8 @@ angular
     'ngTouch',
     'angular-bind-html-compile',
     'infinite-scroll',
-    'hljs'
+    'hljs',
+    'seo'
   ])
 .config(function (hljsServiceProvider) {
   hljsServiceProvider.setOptions({
@@ -42,6 +43,16 @@ angular
         templateUrl: 'views/viewpost.html',
         controller: 'ViewpostCtrl',
         controllerAs: 'viewpost'
+      })
+      .when('/main', {
+        templateUrl: 'views/main.html',
+        controller: 'MainCtrl',
+        controllerAs: 'main'
+      })
+      .when('/mainpage', {
+        templateUrl: 'views/mainpage.html',
+        controller: 'MainpageCtrl',
+        controllerAs: 'mainpage'
       })
       .otherwise({
         redirectTo: '/main/all'

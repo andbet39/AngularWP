@@ -13,7 +13,8 @@
     "angular-touch": "^1.3.0",
     "bootstrap-sass": "bootstrap-sass-official#~3.3.5",
     "jquery": "~2.1.4",
-    "ngInfiniteScroll": "~1.2.1"
+    "ngInfiniteScroll": "~1.2.1",
+    "angular-seo": "*"
   },
   "devDependencies": {
     "angular-mocks": "^1.3.0"
