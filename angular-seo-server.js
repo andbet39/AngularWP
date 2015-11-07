@@ -28,9 +28,9 @@ var renderHtml = function(url, cb) {
         cb(page.content);
         page.close();
     };
-//    page.onConsoleMessage = function(msg, lineNum, sourceId) {
-//        console.log('CONSOLE: ' + msg + ' (from line #' + lineNum + ' in "' + sourceId + '")');
-//    };
+    page.onConsoleMessage = function(msg, lineNum, sourceId) {
+        console.log('CONSOLE: ' + msg + ' (from line #' + lineNum + ' in "' + sourceId + '")');
+   };
     page.onInitialized = function() {
        page.evaluate(function() {
             setTimeout(function() {
@@ -46,6 +46,7 @@ server.listen(port, function (request, response) {
     var url = urlPrefix
       + request.url.slice(1, request.url.indexOf('?'))
       + '#!' + decodeURIComponent(route);
+    console.log("URL:"+url);
     renderHtml(url, function(html) {
         response.statusCode = 200;
         response.write(html);
