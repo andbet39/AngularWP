@@ -216,15 +216,6 @@ AddDefaultCharset utf-8
 </IfModule>
 
 
-<IfModule mod_rewrite.c>
-        RewriteEngine On
-        Options +FollowSymLinks
-        RewriteCond %{REQUEST_URI}  ^/$
-        RewriteCond %{QUERY_STRING} ^_escaped_fragment_=/?(.*)$
-        RewriteRule ^(.*)$ http://%{SERVER_NAME}:9090/%1? [NC,L]
-</IfModule>
-
-
 # ------------------------------------------------------------------------------
 # | Suppressing / Forcing the "www." at the beginning of URLs                  |
 # ------------------------------------------------------------------------------
