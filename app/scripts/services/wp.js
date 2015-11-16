@@ -4,7 +4,7 @@
 angular.module('angularWpApp')
   .factory('wp', function ($q,$http) {
 
-    var API_URL = 'http://angular.codetutorial.io:3000';
+    var API_URL = 'https://www.codetutorial.io';
     var wp={};
 
       wp.getCategories =  function() {
